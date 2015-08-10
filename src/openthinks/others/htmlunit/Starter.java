@@ -19,13 +19,14 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 public class Starter {
 	static String startBookURL = "http://techbus.safaribooksonline.com/book/programming/java/9781617291999/copyright/kindle_split_001_html";
+
 	static String loginURL = "https://www.safaribooksonline.com/accounts/login";
 	static File saveDir = new File("D:\\keeper");
 	static String authName = "dailey.dai@oracle.com";
 	static String authPass = "dmj123";
 
 	public static void main(String[] args) throws Exception {
-
+		//		startBookURL = "http://techbus.safaribooksonline.com/book/programming/java/9781617291999/chapter-5dot-working-with-streams/ch05lev1sec2_html";
 		try (final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_38, "cn-proxy.jp.oracle.com", 80)) {
 			webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 			webClient.getOptions().setJavaScriptEnabled(true);
@@ -98,20 +99,3 @@ public class Starter {
 
 	}
 }
-
-//		System.setProperty("http.proxyHost", "cn-proxy.jp.oracle.com");
-//		System.setProperty("http.proxyPort", "80");
-// 			Jsoup auth with cookies
-//			Map<String, String> cookies = new HashMap<String, String>();
-//			webClient.getCookieManager().getCookies().stream().forEach((cookie) -> {
-//				cookies.put(cookie.getName(), cookie.getValue());
-//			});
-//
-//			Response response = Jsoup
-//					.connect(
-//							"http://techbus.safaribooksonline.com/book/programming/java/9781617291999/copyright/kindle_split_001_html")
-//					.cookies(cookies).ignoreContentType(true).execute();
-//
-//			FileOutputStream out = (new FileOutputStream(new java.io.File("D:\\kindle_split_001_html")));
-//			out.write(response.bodyAsBytes()); // resultImageResponse.body() is where the image's contents are.
-//			out.close();

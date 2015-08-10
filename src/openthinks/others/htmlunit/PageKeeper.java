@@ -33,7 +33,15 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -56,6 +64,11 @@ public class PageKeeper {
 	public static final String RESOURCE_STYLE_DIR = "style";
 	public static final String RESOURCE_SCRIPT_DIR = "js";
 	public static final String RESOURCE_IMAGE_DIR = "images";
+	public static final String RESOURCE_STYLE_REFERENCE_DIR = "style\\styleref";
+	public static final String RESOURCE_STYLE_REFERENCE_URL = "styleref";
+
+	public static final String RESOURCE_STYLE_REFERENCE_REGEX = "url\\(['\"]?([^\\(\\)'\"]+)['\"]?\\)";
+	public static final Pattern RESOURCE_STYLE_REFERENCE_PATTERN = Pattern.compile(RESOURCE_STYLE_REFERENCE_REGEX);
 
 	private PageKeeper(HtmlPage htmlPage, File keepDir) {
 		super();
@@ -104,13 +117,7 @@ public class PageKeeper {
 				if (styleUrl == null) {
 					continue;
 				}
-				String styleName = styleUrl;
-				int start = styleName.lastIndexOf("/");
-				int end = styleName.indexOf("?");
-				if (end != -1 && start < end)
-					styleName = styleName.substring(start + 1, end);
-				else
-					styleName = styleName.substring(start + 1);
+				String styleName = getResourceName(styleUrl);
 				String styleCtx = "";
 
 				try {
@@ -118,15 +125,65 @@ public class PageKeeper {
 					checkIfAlreadExist(keepFile);
 					WebResponse wrp = getResourceResponse(styleUrl);
 					styleCtx = wrp.getContentAsString("UTF-8");
+					styleCtx = keepStyleReference(styleCtx).toString();
 					store(styleCtx, keepFile);
 					element.setAttribute("href", RESOURCE_STYLE_DIR + "/" + styleName);
 				} catch (IOException e) {
 					e.printStackTrace();
 				} catch (IllegalArgumentException e) {
 					element.setAttribute("href", RESOURCE_STYLE_DIR + "/" + styleName);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}
+	}
+
+	private StringBuffer keepStyleReference(String styleCtx) {
+		Matcher matcher = RESOURCE_STYLE_REFERENCE_PATTERN.matcher(styleCtx);
+		File refDir = new File(keepDir, RESOURCE_STYLE_REFERENCE_DIR);
+		if (!refDir.exists())
+			refDir.mkdirs();
+		StringBuffer sb = new StringBuffer();
+		while (matcher.find()) {
+			String relativeURL = matcher.group(1);
+			String styleRefUrl = getFullyQualifiedUrl(relativeURL);
+			String styleRefName = getResourceName(styleRefUrl);
+			String styleRefCtx = "";
+			File keepFile = new File(refDir, styleRefName);
+			WebResponse wrp = null;
+			try {
+				checkIfAlreadExist(keepFile);
+				wrp = getResourceResponse(styleRefUrl);
+				if (wrp.getContentType().startsWith("image") || wrp.getContentType().startsWith("IMAGE")) {
+					ImageInputStream iis = ImageIO.createImageInputStream(wrp.getContentAsStream());
+					Iterator<ImageReader> iter = ImageIO.getImageReaders(iis);
+					ImageReader imageReader = iter.next();
+					imageReader.setInput(iis);
+					ImageIO.write(imageReader.read(0), imageReader.getFormatName(), keepFile);
+				} else {
+					styleRefCtx = wrp.getContentAsString("UTF-8");
+					store(styleRefCtx, keepFile);
+				}
+				matcher.appendReplacement(sb, "url(" + RESOURCE_STYLE_REFERENCE_URL + "/" + styleRefName + ")");
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				matcher.appendReplacement(sb, "url(" + RESOURCE_STYLE_REFERENCE_URL + "/" + styleRefName + ")");
+			} catch (NoSuchElementException e) {
+				if (wrp != null) {
+					styleRefCtx = wrp.getContentAsString("UTF-8");
+					store(styleRefCtx, keepFile);
+					matcher.appendReplacement(sb, "url(" + RESOURCE_STYLE_REFERENCE_URL + "/" + styleRefName + ")");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		matcher.appendTail(sb);
+		return sb;
 	}
 
 	private void keepScripts(DomNodeList<DomElement> elementsByTag) {
@@ -139,13 +196,7 @@ public class PageKeeper {
 				if (tagUrl == null) {
 					continue;
 				}
-				String tagName = tagUrl;
-				int start = tagName.lastIndexOf("/");
-				int end = tagName.indexOf("?");
-				if (end != -1 && start < end)
-					tagName = tagName.substring(start + 1, end);
-				else
-					tagName = tagName.substring(start + 1);
+				String tagName = getResourceName(tagUrl);
 				String tagCtx = "";
 				try {
 					File keepFile = new File(tagDir, tagName);
@@ -158,6 +209,8 @@ public class PageKeeper {
 					e.printStackTrace();
 				} catch (IllegalArgumentException e) {
 					element.setAttribute("src", RESOURCE_SCRIPT_DIR + "/" + tagName);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}
@@ -186,6 +239,8 @@ public class PageKeeper {
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
 				htmlImage.setAttribute("src", RESOURCE_IMAGE_DIR + "/" + imgName);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -213,6 +268,17 @@ public class PageKeeper {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	private String getResourceName(String url) {
+		String name = url;
+		int start = name.lastIndexOf("/");
+		int end = name.indexOf("?");
+		if (end != -1 && start < end)
+			name = name.substring(start + 1, end);
+		else
+			name = name.substring(start + 1);
+		return name;
 	}
 
 	private void checkIfAlreadExist(File file) {
