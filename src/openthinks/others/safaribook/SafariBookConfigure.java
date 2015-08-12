@@ -31,6 +31,7 @@ import java.util.Optional;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
 /**
+ * Safari book online getter configure
  * @author dailey.yet@outlook.com
  *
  */

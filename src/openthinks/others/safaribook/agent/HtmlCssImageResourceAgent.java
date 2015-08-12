@@ -32,6 +32,7 @@ import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
+ * The css reference image resource agent of HTML page
  * @author dailey.yet@outlook.com
  *
  */
@@ -55,7 +56,7 @@ public class HtmlCssImageResourceAgent extends HtmlImageResourceAgent {
 
 	@Override
 	public void makeChangeToLocal(HtmlElement element) {
-
+		//No action for change
 	}
 
 }

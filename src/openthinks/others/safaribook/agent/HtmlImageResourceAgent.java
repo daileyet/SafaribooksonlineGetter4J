@@ -46,10 +46,11 @@ import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
+ * The image resource agent for HTML page
  * @author dailey.yet@outlook.com
- *
+ * @see HtmlCssImageResourceAgent
  */
-public class HtmlImageResourceAgent extends HtmlResourceAgent {
+public class HtmlImageResourceAgent extends HtmlBinaryResourceAgent {
 
 	public HtmlImageResourceAgent(HtmlResourceKeeper<?> keeper) {
 		super(keeper);

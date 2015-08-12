@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.LogManager;
 
 import openthinks.libs.utilities.CommonUtilities;
+import openthinks.others.safaribook.exception.LostConfigureItemException;
 import openthinks.others.safaribook.util.ProcessLoger;
 import openthinks.others.safaribook.util.ProcessLoger.PLLevel;
 
@@ -22,6 +23,11 @@ import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
+/**
+ * Safari book online getter entry
+ * @author dailey.yet@outlook.com
+ *
+ */
 public final class SafariBookLaunch {
 	private SafariBookConfigure config;
 
@@ -30,6 +36,11 @@ public final class SafariBookLaunch {
 		this.config = config;
 	}
 
+	/**
+	 * start to download action
+	 * @throws SecurityException
+	 * @throws IOException
+	 */
 	public void launch() throws SecurityException, IOException {
 		if (!config.getKeepDir().isPresent())
 			throw new LostConfigureItemException("Lost configuration for save dir for this book.");

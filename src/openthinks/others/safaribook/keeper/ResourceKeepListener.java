@@ -17,7 +17,7 @@
  * under the License.
  *
 * @Title: ResourceKeepListener.java 
-* @Package openthinks.others.safaribook 
+* @Package openthinks.others.safaribook.keeper
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
@@ -33,8 +33,16 @@ package openthinks.others.safaribook.keeper;
  */
 public interface ResourceKeepListener {
 
+	/**
+	 * action to do before the keep action
+	 * @param resourceKeep ResourceKeep
+	 */
 	void doKeepBefore(ResourceKeep resourceKeep);
 
+	/**
+	 * action to do after the keep action
+	 * @param resourceKeep ResourceKeep
+	 */
 	void doKeepAfter(ResourceKeep resourceKeep);
 
 }

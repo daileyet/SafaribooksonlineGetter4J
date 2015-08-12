@@ -40,6 +40,7 @@ import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
+ * The resource agent for HTML page
  * @author dailey.yet@outlook.com
  *
  */
@@ -57,6 +58,10 @@ public abstract class HtmlResourceAgent implements ResourceAgent {
 		return ((T) keeper);
 	}
 
+	/**
+	 * persist the text to local file
+	 * @param textContent String
+	 */
 	public void storeTextResource(String textContent) {
 		try (PrintWriter writer = new PrintWriter(new FileOutputStream(keeper.getResourcePath()))) {
 			writer.write(textContent);
@@ -65,6 +70,10 @@ public abstract class HtmlResourceAgent implements ResourceAgent {
 		}
 	}
 
+	/**
+	 * persist the {@link InputStream} to local file
+	 * @param ins {@link InputStream}
+	 */
 	public void storeBinaryResource(InputStream ins) {
 		byte[] buff = new byte[1024 * 10];
 		try (FileOutputStream fileOutputStream = new FileOutputStream(keeper.getResourcePath());

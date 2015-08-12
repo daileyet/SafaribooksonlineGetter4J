@@ -17,7 +17,7 @@
  * under the License.
  *
 * @Title: ResourceKeepListeners.java 
-* @Package openthinks.others.safaribook 
+* @Package openthinks.others.safaribook.keeper
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The list of {@link ResourceKeepListener}
  * @author dailey.yet@outlook.com
  *
  */

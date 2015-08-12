@@ -29,8 +29,11 @@ import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
 import openthinks.others.safaribook.util.ResourceType;
 
 /**
+ * The text resource agent for HTML page
  * @author dailey.yet@outlook.com
- *
+ * @see HtmlPageResourceAgent
+ * @see HtmlJsResourceAgent
+ * @see HtmlCssResourceAgent
  */
 public class HtmlTextResourceAgent extends HtmlResourceAgent {
 

@@ -34,6 +34,7 @@ import openthinks.others.safaribook.util.ResourceType;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
+ * The javascript resource agent of HTML page
  * @author dailey.yet@outlook.com
  *
  */

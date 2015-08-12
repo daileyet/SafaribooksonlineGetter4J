@@ -34,8 +34,9 @@ import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
+ * The binary resource agent for HTML page
  * @author dailey.yet@outlook.com
- *
+ * @see HtmlImageResourceAgent
  */
 public class HtmlBinaryResourceAgent extends HtmlResourceAgent {
 

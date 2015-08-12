@@ -17,7 +17,7 @@
  * under the License.
  *
 * @Title: ResourceKeep.java 
-* @Package openthinks.others.safaribook 
+* @Package openthinks.others.safaribook.keeper 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
@@ -48,6 +48,11 @@ public interface ResourceKeep {
 	 */
 	public void keep();
 
+	/**
+	 * get resource name from the resource URL
+	 * @param url URL
+	 * @return String
+	 */
 	public default String resourceNameOf(URL url) {
 		String name = url.toString();
 		int start = name.lastIndexOf("/");
@@ -59,21 +64,37 @@ public interface ResourceKeep {
 		return name;
 	}
 
+	/**
+	 * get resource URL
+	 * @return URL
+	 */
 	public default URL getResourceURL() {
 		Objects.requireNonNull(resourceInfo());
 		return resourceInfo().getResourceURL();
 	}
 
+	/**
+	 * get resource type {@link ResourceType}
+	 * @return ResourceType
+	 */
 	public default ResourceType getResourceType() {
 		Objects.requireNonNull(resourceInfo());
 		return resourceInfo().getResourceType();
 	}
 
+	/**
+	 * get resource name
+	 * @return String
+	 */
 	public default String getResourceName() {
 		Objects.requireNonNull(resourceInfo());
 		return resourceInfo().getResourceName();
 	}
 
+	/**
+	 * get resource save local path
+	 * @return String
+	 */
 	public default String getResourcePath() {
 		Objects.requireNonNull(resourceInfo());
 		return resourceInfo().getResourcePath();

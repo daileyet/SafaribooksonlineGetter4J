@@ -17,7 +17,7 @@
  * under the License.
  *
 * @Title: ResourceAlreadyExistException.java 
-* @Package openthinks.others.safaribook.keeper 
+* @Package openthinks.others.safaribook.exception
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
@@ -40,7 +40,6 @@ public class ResourceAlreadyExistException extends RuntimeException {
 	 * 
 	 */
 	public ResourceAlreadyExistException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -48,7 +47,6 @@ public class ResourceAlreadyExistException extends RuntimeException {
 	 */
 	public ResourceAlreadyExistException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -56,7 +54,6 @@ public class ResourceAlreadyExistException extends RuntimeException {
 	 */
 	public ResourceAlreadyExistException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -65,7 +62,6 @@ public class ResourceAlreadyExistException extends RuntimeException {
 	 */
 	public ResourceAlreadyExistException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -77,7 +73,6 @@ public class ResourceAlreadyExistException extends RuntimeException {
 	public ResourceAlreadyExistException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
 
 }

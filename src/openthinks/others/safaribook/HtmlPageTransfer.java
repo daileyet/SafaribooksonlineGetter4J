@@ -45,6 +45,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlScript;
 
 /**
+ * Responsible for download whole html page include css,js,image resources<BR>
+ * Also, will change the reference link to local dowanload
  * @author dailey.yet@outlook.com
  *
  */
@@ -59,6 +61,9 @@ public class HtmlPageTransfer {
 		this.keepDir = keepDir;
 	}
 
+	/**
+	 * main action to download html page
+	 */
 	public void transfer() {
 		Objects.requireNonNull(htmlPage);
 		Objects.requireNonNull(keepDir);
@@ -178,6 +183,11 @@ public class HtmlPageTransfer {
 						});
 	}
 
+	/**
+	 * get full URL path for the special relative path
+	 * @param relative String 
+	 * @return URL
+	 */
 	public URL getFullyQualifiedUrl(String relative) {
 		try {
 			return this.htmlPage.getFullyQualifiedUrl(relative);
@@ -199,6 +209,10 @@ public class HtmlPageTransfer {
 		return new File(keepDir, RESOURCE_IMAGE_DIR);
 	}
 
+	/**
+	 * get the resource which referenced by <code>url()</code> from css save dir 
+	 * @return File
+	 */
 	public File getCssRefKeepDir() {
 		return new File(keepDir, RESOURCE_STYLE_REFERENCE_DIR);
 	}

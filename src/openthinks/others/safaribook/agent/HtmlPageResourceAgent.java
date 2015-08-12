@@ -33,10 +33,11 @@ import openthinks.others.safaribook.util.ResourceType;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
+ * The html content agent for HTML page
  * @author dailey.yet@outlook.com
  *
  */
-public class HtmlPageResourceAgent extends HtmlResourceAgent {
+public class HtmlPageResourceAgent extends HtmlTextResourceAgent {
 
 	public HtmlPageResourceAgent(HtmlResourceKeeper<?> keeper) {
 		super(keeper);

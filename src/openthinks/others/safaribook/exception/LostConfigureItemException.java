@@ -17,13 +17,13 @@
  * under the License.
  *
 * @Title: LostConfigureItemException.java 
-* @Package openthinks.others.safaribook 
+* @Package openthinks.others.safaribook.exception
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 12, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook;
+package openthinks.others.safaribook.exception;
 
 /**
  * @author dailey.yet@outlook.com
@@ -31,9 +31,6 @@ package openthinks.others.safaribook;
  */
 public class LostConfigureItemException extends RuntimeException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7214882904946817958L;
 
 	public LostConfigureItemException() {

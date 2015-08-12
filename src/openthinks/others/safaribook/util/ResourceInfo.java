@@ -17,7 +17,7 @@
  * under the License.
  *
 * @Title: ResourceInfo.java 
-* @Package openthinks.others.safaribook 
+* @Package openthinks.others.safaribook.util
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015

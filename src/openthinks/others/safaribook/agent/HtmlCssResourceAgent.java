@@ -40,6 +40,7 @@ import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
+ * The css resource agent of HTML page
  * @author dailey.yet@outlook.com
  *
  */
@@ -72,8 +73,10 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 	}
 
 	/**
+	 * keep those reference in css, like <code>url()</code>
 	 * @param styleCtx
 	 * @throws IOException 
+	 * @return String the localized css after keep reference resource
 	 */
 	String deepIntoRef(String styleCtx, HtmlElement element) throws IOException {
 		Matcher matcher = HtmlPageTransfer.RESOURCE_STYLE_REFERENCE_PATTERN.matcher(styleCtx);
@@ -112,6 +115,10 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 		return sb.toString();
 	}
 
+	/**
+	 * get css reference resource keep dir
+	 * @return File
+	 */
 	public File getCssRefDir() {
 		return new File(keeper.getKeepDir(), HtmlPageTransfer.RESOURCE_STYLE_REFERENCE_DIR);
 	}

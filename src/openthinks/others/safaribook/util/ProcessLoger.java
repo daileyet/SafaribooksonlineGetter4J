@@ -17,7 +17,7 @@
  * under the License.
  *
 * @Title: ProcessLoger.java 
-* @Package openthinks.others.safaribook 
+* @Package openthinks.others.safaribook.util
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
@@ -26,6 +26,7 @@
 package openthinks.others.safaribook.util;
 
 /**
+ * Simple process logger
  * @author dailey.yet@outlook.com
  *
  */
