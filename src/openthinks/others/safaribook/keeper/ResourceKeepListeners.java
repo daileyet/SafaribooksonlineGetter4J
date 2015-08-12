@@ -16,25 +16,47 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: ResourceKeepListener.java 
+* @Title: ResourceKeepListeners.java 
 * @Package openthinks.others.safaribook 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook;
+package openthinks.others.safaribook.keeper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 
- * The listener of {@link ResourceKeep}
  * @author dailey.yet@outlook.com
  *
  */
-public interface ResourceKeepListener {
+public class ResourceKeepListeners {
+	private List<ResourceKeepListener> listeners = new ArrayList<ResourceKeepListener>();
 
-	void doKeepBefore(ResourceKeep resourceKeep);
+	public void doKeepBefore(ResourceKeep resourceKeeper) {
+		listeners.stream().forEach((keepListener) -> {
+			try {
+				keepListener.doKeepBefore(resourceKeeper);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
 
-	void doKeepAfter(ResourceKeep resourceKeep);
+	public void doKeepAfter(ResourceKeep resourceKeeper) {
+		listeners.stream().forEach((keepListener) -> {
+			try {
+				keepListener.doKeepAfter(resourceKeeper);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
+	public void add(ResourceKeepListener keepListener) {
+		listeners.add(keepListener);
+	}
 
 }

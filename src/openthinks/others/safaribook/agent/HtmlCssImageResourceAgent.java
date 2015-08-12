@@ -16,42 +16,46 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: HtmlPageResourceKeeper.java 
-* @Package openthinks.others.safaribook.keeper 
+* @Title: HtmlCssImageResourceAgent.java 
+* @Package openthinks.others.safaribook.agent 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 10, 2015
+* @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.keeper;
+package openthinks.others.safaribook.agent;
 
-import java.io.IOException;
 import java.net.URL;
 
-import com.gargoylesoftware.htmlunit.WebResponse;
+import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
+
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
  * @author dailey.yet@outlook.com
  *
  */
-public class HtmlPageResourceKeeper extends AbstractResourceKeeper {
+public class HtmlCssImageResourceAgent extends HtmlImageResourceAgent {
 
-	/* (non-Javadoc)
-	 * @see openthinks.others.safaribook.keeper.AbstractResourceKeeper#doKeep()
-	 */
-	@Override
-	protected void doKeep() throws Exception {
-		// TODO Auto-generated method stub
-
+	public HtmlCssImageResourceAgent(HtmlResourceKeeper<?> keeper) {
+		super(keeper);
 	}
 
-	/* (non-Javadoc)
-	 * @see openthinks.others.safaribook.keeper.AbstractResourceKeeper#loadWebResponse(java.net.URL)
-	 */
 	@Override
-	protected WebResponse loadWebResponse(URL url) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+	public String resolve(URL url) {
+		String name = url.toString();
+		int start = name.lastIndexOf("/");
+		int end = name.indexOf("?");
+		if (end != -1 && start < end)
+			name = name.substring(start + 1, end);
+		else
+			name = name.substring(start + 1);
+		return name;
+	}
+
+	@Override
+	public void makeChangeToLocal(HtmlElement element) {
+
 	}
 
 }

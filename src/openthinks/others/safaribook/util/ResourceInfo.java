@@ -23,7 +23,7 @@
 * @date Aug 10, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook;
+package openthinks.others.safaribook.util;
 
 import java.net.URL;
 

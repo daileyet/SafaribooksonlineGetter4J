@@ -16,20 +16,31 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: ResourceType.java 
-* @Package openthinks.others.safaribook 
+* @Title: HtmlTextResourceAgent.java 
+* @Package openthinks.others.safaribook.agent 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 10, 2015
+* @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook;
+package openthinks.others.safaribook.agent;
+
+import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
+import openthinks.others.safaribook.util.ResourceType;
 
 /**
- * Resource type
  * @author dailey.yet@outlook.com
  *
  */
-public enum ResourceType {
-	TEXT, TEXT_HTML, TEXT_XML, TEXT_JAVASCRIPT, TEXT_CSS, IMAGE, APPLICATION;
+public class HtmlTextResourceAgent extends HtmlResourceAgent {
+
+	public HtmlTextResourceAgent(HtmlResourceKeeper<?> keeper) {
+		super(keeper);
+	}
+
+	@Override
+	public ResourceType getResourceType() {
+		return ResourceType.TEXT;
+	}
+
 }

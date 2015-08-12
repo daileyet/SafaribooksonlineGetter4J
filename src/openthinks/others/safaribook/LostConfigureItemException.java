@@ -16,39 +16,45 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: BinaryResourceKeeper.java 
-* @Package openthinks.others.safaribook.keeper 
+* @Title: LostConfigureItemException.java 
+* @Package openthinks.others.safaribook 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 10, 2015
+* @date Aug 12, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.keeper;
-
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import com.gargoylesoftware.htmlunit.WebResponse;
+package openthinks.others.safaribook;
 
 /**
  * @author dailey.yet@outlook.com
  *
  */
-public abstract class BinaryResourceKeeper extends AbstractResourceKeeper {
+public class LostConfigureItemException extends RuntimeException {
 
-	@Override
-	protected void doKeep() throws Exception {
-		WebResponse wrp = loadWebResponse(this.getResourceURL());
-		byte[] buff = new byte[1024 * 10];
-		try (FileOutputStream fileOutputStream = new FileOutputStream(this.getResourcePath());
-				BufferedInputStream bufferedInputStream = new BufferedInputStream(wrp.getContentAsStream())) {
-			int size = -1;
-			while ((size = bufferedInputStream.read(buff)) != -1) {
-				fileOutputStream.write(buff, 0, size);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7214882904946817958L;
+
+	public LostConfigureItemException() {
+		super();
 	}
+
+	public LostConfigureItemException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	public LostConfigureItemException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public LostConfigureItemException(String message) {
+		super(message);
+	}
+
+	public LostConfigureItemException(Throwable cause) {
+		super(cause);
+	}
+
 }

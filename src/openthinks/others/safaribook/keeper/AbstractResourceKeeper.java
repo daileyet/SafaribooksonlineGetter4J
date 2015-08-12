@@ -26,14 +26,13 @@
 package openthinks.others.safaribook.keeper;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URL;
 
-import openthinks.others.safaribook.ResourceInfo;
-import openthinks.others.safaribook.ResourceKeep;
-import openthinks.others.safaribook.ResourceKeepListeners;
+import openthinks.libs.utilities.CommonUtilities;
+import openthinks.others.safaribook.exception.ResourceAlreadyExistException;
+import openthinks.others.safaribook.util.ProcessLoger;
+import openthinks.others.safaribook.util.ResourceInfo;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 
@@ -45,20 +44,33 @@ public abstract class AbstractResourceKeeper implements ResourceKeep {
 	private ResourceKeepListeners keepListeners = new ResourceKeepListeners();
 	protected ResourceInfo resourceInfo;
 
+	public void addResourceKeepListener(ResourceKeepListener keepListener) {
+		keepListeners.add(keepListener);
+	}
+
 	@Override
 	public void keep() {
 		keepListeners.doKeepBefore(this);
 		try {
 			checkIfExist();
 			doKeep();
+			doChange();
+		} catch (ResourceAlreadyExistException e) {
+			ProcessLoger.debug(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			doChange();
 		} catch (Exception e) {
-			e.printStackTrace();
+			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 		keepListeners.doKeepAfter(this);
 	}
 
+	protected abstract void doChange();
+
 	protected void checkIfExist() {
 		File keepPath = new File(this.getResourcePath());
+		if (keepPath.exists()) {
+			throw new ResourceAlreadyExistException(keepPath.getAbsolutePath() + " was already download.");
+		}
 		if (keepPath.isFile() && keepPath.getParentFile().isDirectory() || !keepPath.getParentFile().exists()) {
 			keepPath.getParentFile().mkdirs();
 		}
@@ -70,14 +82,6 @@ public abstract class AbstractResourceKeeper implements ResourceKeep {
 	protected abstract void doKeep() throws Exception;
 
 	protected abstract WebResponse loadWebResponse(URL url) throws IOException;
-
-	protected void store(String textContent, String keepFile) {
-		try (PrintWriter writer = new PrintWriter(new FileOutputStream(keepFile))) {
-			writer.write(textContent);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public ResourceInfo resourceInfo() {

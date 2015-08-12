@@ -16,42 +16,45 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: CssKeeper.java 
-* @Package openthinks.others.safaribook.keeper 
+* @Title: HtmlJsResourceAgent.java 
+* @Package openthinks.others.safaribook.agent 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 10, 2015
+* @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.keeper;
+package openthinks.others.safaribook.agent;
 
 import java.io.IOException;
-import java.net.URL;
 
-import openthinks.others.safaribook.ResourceType;
+import openthinks.others.safaribook.HtmlPageTransfer;
+import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
+import openthinks.others.safaribook.util.ResourceType;
 
-import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
  * @author dailey.yet@outlook.com
  *
  */
-public class CssKeeper extends TextResourceKeeper {
-	private HtmlPageKeeper pageKeeper;
+public class HtmlJsResourceAgent extends HtmlTextResourceAgent {
 
-	public CssKeeper(HtmlPageKeeper pageKeeper) {
-		super();
-		this.pageKeeper = pageKeeper;
-	}
-
-	@Override
-	protected WebResponse loadWebResponse(URL url) throws IOException {
-		return pageKeeper.loadWebResponse(url);
+	public HtmlJsResourceAgent(HtmlResourceKeeper<?> keeper) {
+		super(keeper);
 	}
 
 	@Override
 	public ResourceType getResourceType() {
-		return ResourceType.TEXT_CSS;
+		return ResourceType.TEXT_JAVASCRIPT;
 	}
 
+	@Override
+	public void makeKeepToLocal(HtmlElement element) throws IOException {
+		super.makeKeepToLocal(element);
+	}
+
+	@Override
+	public void makeChangeToLocal(HtmlElement element) {
+		element.setAttribute("src", HtmlPageTransfer.RESOURCE_SCRIPT_DIR + "/" + keeper.getResourceName());
+	}
 }

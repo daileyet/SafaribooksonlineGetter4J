@@ -16,43 +16,42 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: ResourceKeepListeners.java 
-* @Package openthinks.others.safaribook 
+* @Title: HtmlBinaryResourceAgent.java 
+* @Package openthinks.others.safaribook.agent 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 10, 2015
+* @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook;
+package openthinks.others.safaribook.agent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+
+import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
+import openthinks.others.safaribook.util.ResourceType;
+
+import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
  * @author dailey.yet@outlook.com
  *
  */
-public class ResourceKeepListeners {
-	private List<ResourceKeepListener> listeners = new ArrayList<ResourceKeepListener>();
+public class HtmlBinaryResourceAgent extends HtmlResourceAgent {
 
-	public void doKeepBefore(ResourceKeep resourceKeeper) {
-		listeners.stream().forEach((keepListener) -> {
-			try {
-				keepListener.doKeepBefore(resourceKeeper);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+	public HtmlBinaryResourceAgent(HtmlResourceKeeper<?> keeper) {
+		super(keeper);
 	}
 
-	public void doKeepAfter(ResourceKeep resourceKeeper) {
-		listeners.stream().forEach((keepListener) -> {
-			try {
-				keepListener.doKeepAfter(resourceKeeper);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+	@Override
+	public void makeKeepToLocal(HtmlElement element) throws IOException {
+		WebResponse wrp = this.keeper.loadWebResponse(this.keeper.getResourceURL());
+		storeBinaryResource(wrp.getContentAsStream());
+	}
+
+	@Override
+	public ResourceType getResourceType() {
+		return ResourceType.APPLICATION;
 	}
 
 }

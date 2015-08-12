@@ -16,8 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: TextResourceKeeper.java 
-* @Package openthinks.others.safaribook.keeper 
+* @Title: ResourceKeepListener.java 
+* @Package openthinks.others.safaribook 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
@@ -25,25 +25,16 @@
 */
 package openthinks.others.safaribook.keeper;
 
-import openthinks.others.safaribook.ResourceType;
-
-import com.gargoylesoftware.htmlunit.WebResponse;
-
 /**
+ * 
+ * The listener of {@link ResourceKeep}
  * @author dailey.yet@outlook.com
  *
  */
-public abstract class TextResourceKeeper extends AbstractResourceKeeper {
+public interface ResourceKeepListener {
 
-	@Override
-	protected void doKeep() throws Exception {
-		WebResponse wrp = loadWebResponse(this.getResourceURL());
-		String content = wrp.getContentAsString("UTF-8");
-		store(content, this.getResourcePath());
-	}
+	void doKeepBefore(ResourceKeep resourceKeep);
 
-	@Override
-	public ResourceType getResourceType() {
-		return ResourceType.TEXT;
-	}
+	void doKeepAfter(ResourceKeep resourceKeep);
+
 }

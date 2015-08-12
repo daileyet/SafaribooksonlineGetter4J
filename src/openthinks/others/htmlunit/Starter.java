@@ -22,8 +22,8 @@ public class Starter {
 
 	static String loginURL = "https://www.safaribooksonline.com/accounts/login";
 	static File saveDir = new File("D:\\keeper");
-	static String authName = "dailey.dai@oracle.com";
-	static String authPass = "dmj123";
+	static String authName = "";
+	static String authPass = "";
 
 	public static void main(String[] args) throws Exception {
 		//		startBookURL = "http://techbus.safaribooksonline.com/book/programming/java/9781617291999/chapter-5dot-working-with-streams/ch05lev1sec2_html";

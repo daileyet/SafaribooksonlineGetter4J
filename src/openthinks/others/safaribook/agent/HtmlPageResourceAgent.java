@@ -16,42 +16,41 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: JavascriptKeeper.java 
-* @Package openthinks.others.safaribook.keeper 
+* @Title: HtmlPageResourceAgent.java 
+* @Package openthinks.others.safaribook.agent 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 10, 2015
+* @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.keeper;
+package openthinks.others.safaribook.agent;
 
 import java.io.IOException;
-import java.net.URL;
 
-import openthinks.others.safaribook.ResourceType;
+import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
+import openthinks.others.safaribook.util.ResourceType;
 
-import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
  * @author dailey.yet@outlook.com
  *
  */
-public class JavascriptKeeper extends TextResourceKeeper {
-	private HtmlPageKeeper pageKeeper;
+public class HtmlPageResourceAgent extends HtmlResourceAgent {
 
-	public JavascriptKeeper(HtmlPageKeeper pageKeeper) {
-		super();
-		this.pageKeeper = pageKeeper;
+	public HtmlPageResourceAgent(HtmlResourceKeeper<?> keeper) {
+		super(keeper);
 	}
 
 	@Override
-	protected WebResponse loadWebResponse(URL url) throws IOException {
-		return pageKeeper.loadWebResponse(url);
+	public void makeKeepToLocal(HtmlElement element) throws IOException {
+		String html = keeper.getHtmlPage().asXml();
+		storeTextResource(html);
 	}
 
 	@Override
 	public ResourceType getResourceType() {
-		return ResourceType.TEXT_JAVASCRIPT;
+		return ResourceType.TEXT_HTML;
 	}
 
 }
