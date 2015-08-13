@@ -17,19 +17,19 @@
  * under the License.
  *
 * @Title: ResourceAgent.java 
-* @Package openthinks.others.safaribook.agent
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.agent;
+package openthinks.others.webpages.agent;
 
 import java.io.IOException;
 import java.net.URL;
 
-import openthinks.others.safaribook.keeper.ResourceKeep;
-import openthinks.others.safaribook.util.ResourceType;
+import openthinks.others.webpages.keeper.HtmlResourceKeeper;
+import openthinks.others.webpages.keeper.ResourceKeep;
+import openthinks.others.webpages.util.ResourceType;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
@@ -76,6 +76,29 @@ public interface ResourceAgent {
 	 * @return String
 	 */
 	public default String resolve(URL url) {
+		String name = url.toString();
+		int start = name.lastIndexOf("/");
+		int end = name.indexOf("?");
+		if (end != -1 && start < end)
+			name = name.substring(start + 1, end);
+		else
+			name = name.substring(start + 1);
+		//
+		end = name.lastIndexOf("#");
+		if (end != -1) {
+			name = name.substring(0, end);
+		}
+
+		return name;
+	}
+
+	/**
+	 * xxx.svg#abc
+	 * the real resource name convert function, it will called the {@link HtmlResourceKeeper#getResourceNameOfProundSign()}
+	 * @param url URL
+	 * @return String
+	 */
+	public default String resolveOfPoundSign(URL url) {
 		String name = url.toString();
 		int start = name.lastIndexOf("/");
 		int end = name.indexOf("?");

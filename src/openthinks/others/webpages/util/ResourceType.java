@@ -17,13 +17,12 @@
  * under the License.
  *
 * @Title: ResourceType.java 
-* @Package openthinks.others.safaribook.util
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.util;
+package openthinks.others.webpages.util;
 
 import java.util.Arrays;
 import java.util.Collections;

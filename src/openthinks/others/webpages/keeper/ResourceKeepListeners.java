@@ -16,34 +16,47 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: HtmlTextResourceAgent.java 
-* @Package openthinks.others.safaribook.agent 
+* @Title: ResourceKeepListeners.java 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 11, 2015
+* @date Aug 10, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.agent;
+package openthinks.others.webpages.keeper;
 
-import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
-import openthinks.others.safaribook.util.ResourceType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * The text resource agent for HTML page
+ * The list of {@link ResourceKeepListener}
  * @author dailey.yet@outlook.com
- * @see HtmlPageResourceAgent
- * @see HtmlJsResourceAgent
- * @see HtmlCssResourceAgent
+ *
  */
-public class HtmlTextResourceAgent extends HtmlResourceAgent {
+public class ResourceKeepListeners {
+	private List<ResourceKeepListener> listeners = new ArrayList<ResourceKeepListener>();
 
-	public HtmlTextResourceAgent(HtmlResourceKeeper<?> keeper) {
-		super(keeper);
+	public void doKeepBefore(ResourceKeep resourceKeeper) {
+		listeners.stream().forEach((keepListener) -> {
+			try {
+				keepListener.doKeepBefore(resourceKeeper);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
-	@Override
-	public ResourceType getResourceType() {
-		return ResourceType.TEXT;
+	public void doKeepAfter(ResourceKeep resourceKeeper) {
+		listeners.stream().forEach((keepListener) -> {
+			try {
+				keepListener.doKeepAfter(resourceKeeper);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
+	public void add(ResourceKeepListener keepListener) {
+		listeners.add(keepListener);
 	}
 
 }

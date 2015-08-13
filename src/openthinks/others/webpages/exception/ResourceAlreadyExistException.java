@@ -17,13 +17,12 @@
  * under the License.
  *
 * @Title: ResourceAlreadyExistException.java 
-* @Package openthinks.others.safaribook.exception
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.exception;
+package openthinks.others.webpages.exception;
 
 /**
  * @author dailey.yet@outlook.com

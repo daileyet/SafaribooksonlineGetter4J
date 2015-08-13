@@ -16,42 +16,36 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: HtmlPageResourceAgent.java 
-* @Package openthinks.others.safaribook.agent 
+* @Title: IgnoreJDKLoggerHander.java 
+* @Package openthinks.others 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 11, 2015
+* @date Aug 13, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.agent;
+package openthinks.others;
 
-import java.io.IOException;
-
-import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
-import openthinks.others.safaribook.util.ResourceType;
-
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 /**
- * The html content agent for HTML page
  * @author dailey.yet@outlook.com
  *
  */
-public class HtmlPageResourceAgent extends HtmlTextResourceAgent {
+public class IgnoreJDKLoggerHander extends Handler {
 
-	public HtmlPageResourceAgent(HtmlResourceKeeper<?> keeper) {
-		super(keeper);
+	@Override
+	public void publish(LogRecord record) {
 	}
 
 	@Override
-	public void makeKeepToLocal(HtmlElement element) throws IOException {
-		String html = keeper.getHtmlPage().asXml();
-		storeTextResource(html);
+	public void flush() {
+
 	}
 
 	@Override
-	public ResourceType getResourceType() {
-		return ResourceType.TEXT_HTML;
+	public void close() throws SecurityException {
+
 	}
 
 }

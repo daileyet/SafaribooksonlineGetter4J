@@ -16,46 +16,42 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: HtmlJsResourceAgent.java 
-* @Package openthinks.others.safaribook.agent 
+* @Title: HtmlBinaryResourceAgent.java 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.agent;
+package openthinks.others.webpages.agent;
 
 import java.io.IOException;
 
-import openthinks.others.safaribook.HtmlPageTransfer;
-import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
-import openthinks.others.safaribook.util.ResourceType;
+import openthinks.others.webpages.keeper.HtmlResourceKeeper;
+import openthinks.others.webpages.util.ResourceType;
 
+import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
- * The javascript resource agent of HTML page
+ * The binary resource agent for HTML page
  * @author dailey.yet@outlook.com
- *
+ * @see HtmlImageResourceAgent
  */
-public class HtmlJsResourceAgent extends HtmlTextResourceAgent {
+public class HtmlBinaryResourceAgent extends HtmlResourceAgent {
 
-	public HtmlJsResourceAgent(HtmlResourceKeeper<?> keeper) {
+	public HtmlBinaryResourceAgent(HtmlResourceKeeper keeper) {
 		super(keeper);
 	}
 
 	@Override
-	public ResourceType getResourceType() {
-		return ResourceType.TEXT_JAVASCRIPT;
-	}
-
-	@Override
 	public void makeKeepToLocal(HtmlElement element) throws IOException {
-		super.makeKeepToLocal(element);
+		WebResponse wrp = this.keeper.loadWebResponse(this.keeper.getResourceURL());
+		storeBinaryResource(wrp.getContentAsStream());
 	}
 
 	@Override
-	public void makeChangeToLocal(HtmlElement element) {
-		element.setAttribute("src", HtmlPageTransfer.RESOURCE_SCRIPT_DIR + "/" + keeper.getResourceName());
+	public ResourceType getResourceType() {
+		return ResourceType.APPLICATION;
 	}
+
 }

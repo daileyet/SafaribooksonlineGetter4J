@@ -16,47 +16,33 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: HtmlCssImageResourceAgent.java 
-* @Package openthinks.others.safaribook.agent 
+* @Title: HtmlTextResourceAgent.java 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.agent;
+package openthinks.others.webpages.agent;
 
-import java.net.URL;
-
-import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
-
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import openthinks.others.webpages.keeper.HtmlResourceKeeper;
+import openthinks.others.webpages.util.ResourceType;
 
 /**
- * The css reference image resource agent of HTML page
+ * The text resource agent for HTML page
  * @author dailey.yet@outlook.com
- *
+ * @see HtmlPageResourceAgent
+ * @see HtmlJsResourceAgent
+ * @see HtmlCssResourceAgent
  */
-public class HtmlCssImageResourceAgent extends HtmlImageResourceAgent {
+public class HtmlTextResourceAgent extends HtmlResourceAgent {
 
-	public HtmlCssImageResourceAgent(HtmlResourceKeeper<?> keeper) {
+	public HtmlTextResourceAgent(HtmlResourceKeeper keeper) {
 		super(keeper);
 	}
 
 	@Override
-	public String resolve(URL url) {
-		String name = url.toString();
-		int start = name.lastIndexOf("/");
-		int end = name.indexOf("?");
-		if (end != -1 && start < end)
-			name = name.substring(start + 1, end);
-		else
-			name = name.substring(start + 1);
-		return name;
-	}
-
-	@Override
-	public void makeChangeToLocal(HtmlElement element) {
-		//No action for change
+	public ResourceType getResourceType() {
+		return ResourceType.TEXT;
 	}
 
 }

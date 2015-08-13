@@ -17,13 +17,12 @@
  * under the License.
  *
 * @Title: HtmlCssResourceAgent.java 
-* @Package openthinks.others.safaribook.agent 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.agent;
+package openthinks.others.webpages.agent;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,10 +30,10 @@ import java.net.URL;
 import java.util.regex.Matcher;
 
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.others.safaribook.HtmlPageTransfer;
-import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
-import openthinks.others.safaribook.util.ProcessLoger;
-import openthinks.others.safaribook.util.ResourceType;
+import openthinks.others.webpages.HtmlPageTransfer;
+import openthinks.others.webpages.keeper.HtmlResourceKeeper;
+import openthinks.others.webpages.util.ProcessLoger;
+import openthinks.others.webpages.util.ResourceType;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
@@ -46,7 +45,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlElement;
  */
 public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 
-	public HtmlCssResourceAgent(HtmlResourceKeeper<?> keeper) {
+	public HtmlCssResourceAgent(HtmlResourceKeeper keeper) {
 		super(keeper);
 	}
 
@@ -69,7 +68,7 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 
 	@Override
 	public void makeChangeToLocal(HtmlElement element) {
-		element.setAttribute("href", HtmlPageTransfer.RESOURCE_STYLE_DIR + "/" + keeper.getResourceName());
+		element.setAttribute("href", HtmlPageTransfer.RESOURCE_STYLE_DIR + "/" + keeper.getResourceNameOfProundSign());
 	}
 
 	/**
@@ -86,8 +85,7 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 			String relativeURL = matcher.group(1);
 			URL styleRefUrl = keeper.getFullyQualifiedUrl(relativeURL);
 			WebResponse wrp = keeper.loadWebResponse(styleRefUrl);
-			final HtmlResourceKeeper<HtmlResourceAgent> refKeeper = new HtmlResourceKeeper<HtmlResourceAgent>(element,
-					refDir);
+			final HtmlResourceKeeper refKeeper = new HtmlResourceKeeper(element, refDir);
 			if (wrp.getContentType().startsWith("image") || wrp.getContentType().startsWith("IMAGE")
 					|| ResourceType.IMAGE.isSupportSuffix(keeper.getResourceName())) {
 				refKeeper.initial(styleRefUrl, () -> {
@@ -97,17 +95,15 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 				refKeeper.initial(styleRefUrl, () -> {
 					return new HtmlTextResourceAgent(refKeeper);
 				}).keep();
-			} else if (wrp.getContentType().startsWith("application") || wrp.getContentType().startsWith("APPLICATION")) {
-				refKeeper.initial(styleRefUrl, () -> {
-					return new HtmlBinaryResourceAgent(refKeeper);
-				}).keep();
 			} else {
 				refKeeper.initial(styleRefUrl, () -> {
 					return new HtmlBinaryResourceAgent(refKeeper);
 				}).keep();
 			}
-			matcher.appendReplacement(sb,
-					"url(" + HtmlPageTransfer.RESOURCE_STYLE_REFERENCE_DIR + "/" + refKeeper.getResourceName() + ")");
+			matcher.appendReplacement(
+					sb,
+					"url(" + HtmlPageTransfer.RESOURCE_STYLE_REFERENCE_DIR + "/"
+							+ refKeeper.getResourceNameOfProundSign() + ")");
 			ProcessLoger.info("The resource which type:[" + wrp.getContentType() + "] url:[" + styleRefUrl
 					+ "] was download.");
 		}

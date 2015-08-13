@@ -17,13 +17,12 @@
  * under the License.
  *
 * @Title: HtmlPageTransfer.java 
-* @Package openthinks.others.safaribook 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook;
+package openthinks.others.webpages;
 
 import java.io.File;
 import java.net.URL;
@@ -31,12 +30,12 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.others.safaribook.agent.HtmlCssResourceAgent;
-import openthinks.others.safaribook.agent.HtmlImageResourceAgent;
-import openthinks.others.safaribook.agent.HtmlJsResourceAgent;
-import openthinks.others.safaribook.agent.HtmlPageResourceAgent;
-import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
-import openthinks.others.safaribook.util.ProcessLoger;
+import openthinks.others.webpages.agent.HtmlCssResourceAgent;
+import openthinks.others.webpages.agent.HtmlImageResourceAgent;
+import openthinks.others.webpages.agent.HtmlJsResourceAgent;
+import openthinks.others.webpages.agent.HtmlPageResourceAgent;
+import openthinks.others.webpages.keeper.HtmlResourceKeeper;
+import openthinks.others.webpages.util.ProcessLoger;
 
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
@@ -117,8 +116,7 @@ public class HtmlPageTransfer {
 	}
 
 	void processPage() {
-		final HtmlResourceKeeper<HtmlPageResourceAgent> keeper = new HtmlResourceKeeper<HtmlPageResourceAgent>(
-				htmlPage, keepDir);
+		final HtmlResourceKeeper keeper = new HtmlResourceKeeper(htmlPage, keepDir);
 		keeper.initial(htmlPage.getUrl(), () -> {
 			return new HtmlPageResourceAgent(keeper);
 		}).keep();
@@ -133,54 +131,41 @@ public class HtmlPageTransfer {
 							&& !linkNode.getAttribute("href").isEmpty()
 							&& "stylesheet".equalsIgnoreCase(linkNode.getAttribute("rel"));
 
-				})
-				.forEach(
-						(linkNode) -> {
-							HtmlLink link = (HtmlLink) linkNode;
-							final HtmlResourceKeeper<HtmlCssResourceAgent> keeper = new HtmlResourceKeeper<HtmlCssResourceAgent>(
-									link, getCssKeepDir());
-							URL url = getFullyQualifiedUrl(link.getHrefAttribute());
-							keeper.initial(url, () -> {
-								return new HtmlCssResourceAgent(keeper);
-							}).keep();
-						});
+				}).forEach((linkNode) -> {
+					HtmlLink link = (HtmlLink) linkNode;
+					final HtmlResourceKeeper keeper = new HtmlResourceKeeper(link, getCssKeepDir());
+					URL url = getFullyQualifiedUrl(link.getHrefAttribute());
+					keeper.initial(url, () -> {
+						return new HtmlCssResourceAgent(keeper);
+					}).keep();
+				});
 	}
 
 	void processImgElements() {
-		htmlPage.getElementsByTagName("img")
-				.stream()
-				.filter((domNode) -> {
-					return domNode.hasAttribute("src") && !domNode.getAttribute("src").isEmpty();
-				})
-				.forEach(
-						(imgNode) -> {
-							HtmlImage el = (HtmlImage) imgNode;
-							final HtmlResourceKeeper<HtmlImageResourceAgent> keeper = new HtmlResourceKeeper<HtmlImageResourceAgent>(
-									el, getImageKeepDir());
-							URL url = getFullyQualifiedUrl(imgNode.getAttribute("src"));
-							keeper.initial(url, () -> {
-								return new HtmlImageResourceAgent(keeper);
-							}).keep();
+		htmlPage.getElementsByTagName("img").stream().filter((domNode) -> {
+			return domNode.hasAttribute("src") && !domNode.getAttribute("src").isEmpty();
+		}).forEach((imgNode) -> {
+			HtmlImage el = (HtmlImage) imgNode;
+			final HtmlResourceKeeper keeper = new HtmlResourceKeeper(el, getImageKeepDir());
+			URL url = getFullyQualifiedUrl(imgNode.getAttribute("src"));
+			keeper.initial(url, () -> {
+				return new HtmlImageResourceAgent(keeper);
+			}).keep();
 
-						});
+		});
 	}
 
 	void processScriptElements() {
-		htmlPage.getElementsByTagName("script")
-				.stream()
-				.filter((domNode) -> {
-					return domNode.hasAttribute("src") && !domNode.getAttribute("src").isEmpty();
-				})
-				.forEach(
-						(scriptNode) -> {
+		htmlPage.getElementsByTagName("script").stream().filter((domNode) -> {
+			return domNode.hasAttribute("src") && !domNode.getAttribute("src").isEmpty();
+		}).forEach((scriptNode) -> {
 
-							final HtmlResourceKeeper<HtmlJsResourceAgent> keeper = new HtmlResourceKeeper<HtmlJsResourceAgent>(
-									(HtmlScript) scriptNode, getJsKeepDir());
-							URL url = getFullyQualifiedUrl(scriptNode.getAttribute("src"));
-							keeper.initial(url, () -> {
-								return new HtmlJsResourceAgent(keeper);
-							}).keep();
-						});
+			final HtmlResourceKeeper keeper = new HtmlResourceKeeper((HtmlScript) scriptNode, getJsKeepDir());
+			URL url = getFullyQualifiedUrl(scriptNode.getAttribute("src"));
+			keeper.initial(url, () -> {
+				return new HtmlJsResourceAgent(keeper);
+			}).keep();
+		});
 	}
 
 	/**

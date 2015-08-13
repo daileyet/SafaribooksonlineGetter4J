@@ -17,13 +17,12 @@
  * under the License.
  *
 * @Title: HtmlPageResourceKeeper.java 
-* @Package openthinks.others.safaribook.keeper 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.keeper;
+package openthinks.others.webpages.keeper;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,9 +33,9 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.others.safaribook.agent.HtmlResourceAgent;
-import openthinks.others.safaribook.util.ProcessLoger;
-import openthinks.others.safaribook.util.ResourceInfo;
+import openthinks.others.webpages.agent.HtmlResourceAgent;
+import openthinks.others.webpages.util.ProcessLoger;
+import openthinks.others.webpages.util.ResourceInfo;
 
 import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
@@ -47,10 +46,10 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * @author dailey.yet@outlook.com
  *
  */
-public class HtmlResourceKeeper<T extends HtmlResourceAgent> extends AbstractResourceKeeper {
+public class HtmlResourceKeeper extends AbstractResourceKeeper {
 	protected HtmlElement htmlElement;
 	protected File keepDir;
-	private T resourceAgent;
+	private HtmlResourceAgent resourceAgent;
 	private HtmlPage htmlPage;
 
 	public HtmlResourceKeeper(HtmlElement htmlElement, File keepDir) {
@@ -72,7 +71,7 @@ public class HtmlResourceKeeper<T extends HtmlResourceAgent> extends AbstractRes
 		return this.htmlElement.getHtmlPageOrNull();
 	}
 
-	public HtmlResourceKeeper<T> initial(URL resourceURL, Supplier<T> agentSupplier) {
+	public <T extends HtmlResourceAgent> HtmlResourceKeeper initial(URL resourceURL, Supplier<T> agentSupplier) {
 		this.resourceInfo = new ResourceInfo();
 		this.resourceAgent = agentSupplier.get();
 		Objects.requireNonNull(resourceAgent);
@@ -110,6 +109,10 @@ public class HtmlResourceKeeper<T extends HtmlResourceAgent> extends AbstractRes
 
 	public final File getKeepDir() {
 		return this.keepDir;
+	}
+
+	public String getResourceNameOfProundSign() {
+		return this.resourceAgent.resolveOfPoundSign(this.getResourceURL());
 	}
 
 	public URL getFullyQualifiedUrl(String relative) {

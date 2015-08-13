@@ -17,22 +17,21 @@
  * under the License.
  *
 * @Title: AbstractResourceKeeper.java 
-* @Package openthinks.others.safaribook.keeper 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.keeper;
+package openthinks.others.webpages.keeper;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.others.safaribook.exception.ResourceAlreadyExistException;
-import openthinks.others.safaribook.util.ProcessLoger;
-import openthinks.others.safaribook.util.ResourceInfo;
+import openthinks.others.webpages.exception.ResourceAlreadyExistException;
+import openthinks.others.webpages.util.ProcessLoger;
+import openthinks.others.webpages.util.ResourceInfo;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 

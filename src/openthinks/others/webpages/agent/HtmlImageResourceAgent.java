@@ -17,13 +17,12 @@
  * under the License.
  *
 * @Title: HtmlImageResourceAgent.java 
-* @Package openthinks.others.safaribook.agent 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.agent;
+package openthinks.others.webpages.agent;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,10 +34,10 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.others.safaribook.HtmlPageTransfer;
-import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
-import openthinks.others.safaribook.util.ProcessLoger;
-import openthinks.others.safaribook.util.ResourceType;
+import openthinks.others.webpages.HtmlPageTransfer;
+import openthinks.others.webpages.keeper.HtmlResourceKeeper;
+import openthinks.others.webpages.util.ProcessLoger;
+import openthinks.others.webpages.util.ResourceType;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -52,7 +51,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlElement;
  */
 public class HtmlImageResourceAgent extends HtmlBinaryResourceAgent {
 
-	public HtmlImageResourceAgent(HtmlResourceKeeper<?> keeper) {
+	public HtmlImageResourceAgent(HtmlResourceKeeper keeper) {
 		super(keeper);
 	}
 

@@ -16,48 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: ResourceKeepListeners.java 
-* @Package openthinks.others.safaribook.keeper
+* @Title: ResourceKeepListener.java 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 10, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.keeper;
-
-import java.util.ArrayList;
-import java.util.List;
+package openthinks.others.webpages.keeper;
 
 /**
- * The list of {@link ResourceKeepListener}
+ * 
+ * The listener of {@link ResourceKeep}
  * @author dailey.yet@outlook.com
  *
  */
-public class ResourceKeepListeners {
-	private List<ResourceKeepListener> listeners = new ArrayList<ResourceKeepListener>();
+public interface ResourceKeepListener {
 
-	public void doKeepBefore(ResourceKeep resourceKeeper) {
-		listeners.stream().forEach((keepListener) -> {
-			try {
-				keepListener.doKeepBefore(resourceKeeper);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
+	/**
+	 * action to do before the keep action
+	 * @param resourceKeep ResourceKeep
+	 */
+	void doKeepBefore(ResourceKeep resourceKeep);
 
-	public void doKeepAfter(ResourceKeep resourceKeeper) {
-		listeners.stream().forEach((keepListener) -> {
-			try {
-				keepListener.doKeepAfter(resourceKeeper);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
-	public void add(ResourceKeepListener keepListener) {
-		listeners.add(keepListener);
-	}
+	/**
+	 * action to do after the keep action
+	 * @param resourceKeep ResourceKeep
+	 */
+	void doKeepAfter(ResourceKeep resourceKeep);
 
 }

@@ -17,13 +17,12 @@
  * under the License.
  *
 * @Title: HtmlResourceAgent.java 
-* @Package openthinks.others.safaribook.agent 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.agent;
+package openthinks.others.webpages.agent;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
@@ -32,9 +31,9 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.others.safaribook.keeper.HtmlResourceKeeper;
-import openthinks.others.safaribook.keeper.ResourceKeep;
-import openthinks.others.safaribook.util.ProcessLoger;
+import openthinks.others.webpages.keeper.HtmlResourceKeeper;
+import openthinks.others.webpages.keeper.ResourceKeep;
+import openthinks.others.webpages.util.ProcessLoger;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
@@ -45,9 +44,9 @@ import com.gargoylesoftware.htmlunit.html.HtmlElement;
  *
  */
 public abstract class HtmlResourceAgent implements ResourceAgent {
-	protected HtmlResourceKeeper<?> keeper;
+	protected HtmlResourceKeeper keeper;
 
-	public HtmlResourceAgent(HtmlResourceKeeper<?> keeper) {
+	public HtmlResourceAgent(HtmlResourceKeeper keeper) {
 		super();
 		this.keeper = keeper;
 	}

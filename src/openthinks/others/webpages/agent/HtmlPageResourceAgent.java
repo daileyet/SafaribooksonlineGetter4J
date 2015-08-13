@@ -16,33 +16,41 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: ResourceKeepListener.java 
-* @Package openthinks.others.safaribook.keeper
+* @Title: HtmlPageResourceAgent.java 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 10, 2015
+* @date Aug 11, 2015
 * @version V1.0   
 */
-package openthinks.others.safaribook.keeper;
+package openthinks.others.webpages.agent;
+
+import java.io.IOException;
+
+import openthinks.others.webpages.keeper.HtmlResourceKeeper;
+import openthinks.others.webpages.util.ResourceType;
+
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
- * 
- * The listener of {@link ResourceKeep}
+ * The html content agent for HTML page
  * @author dailey.yet@outlook.com
  *
  */
-public interface ResourceKeepListener {
+public class HtmlPageResourceAgent extends HtmlTextResourceAgent {
 
-	/**
-	 * action to do before the keep action
-	 * @param resourceKeep ResourceKeep
-	 */
-	void doKeepBefore(ResourceKeep resourceKeep);
+	public HtmlPageResourceAgent(HtmlResourceKeeper keeper) {
+		super(keeper);
+	}
 
-	/**
-	 * action to do after the keep action
-	 * @param resourceKeep ResourceKeep
-	 */
-	void doKeepAfter(ResourceKeep resourceKeep);
+	@Override
+	public void makeKeepToLocal(HtmlElement element) throws IOException {
+		String html = keeper.getHtmlPage().asXml();
+		storeTextResource(html);
+	}
+
+	@Override
+	public ResourceType getResourceType() {
+		return ResourceType.TEXT_HTML;
+	}
 
 }
