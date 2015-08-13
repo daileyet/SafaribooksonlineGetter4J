@@ -52,13 +52,13 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 		//		config.setNextChainPageAnchorSelector("");
 		//		config.setProxyHost("");
 		//		config.setProxyPort(80);
-		String config_path = "W:\\book\\config_default.xml";
+		String config_path = null;
 		if (args != null && args.length > 0) {
 			if ("-help".equalsIgnoreCase(args[0])) {
 				showUsage();
 			}
 			if ("-config".equalsIgnoreCase(args[0])) {
-				if (args.length > 2) {
+				if (args.length >= 2) {
 					config_path = args[1];
 				} else {
 					System.out.println("miss configure file path!");
