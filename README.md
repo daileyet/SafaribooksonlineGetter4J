@@ -54,6 +54,8 @@ java -jar SafariBookGetter.jar -config W:\Book\default_config.xml
 <!--The css selector for next chain page anchor on each page -->
 <entry key="pages-next-anchor-selector">a.next[title*='Next (Key: n)']</entry>
 
+<!--show message in CMD-->
+<entry key="logger-level">INFO</entry>
 </properties>
 
 ```
