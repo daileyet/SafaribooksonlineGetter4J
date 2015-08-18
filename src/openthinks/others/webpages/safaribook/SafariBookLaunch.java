@@ -26,6 +26,7 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 		LogManager.getLogManager().readConfiguration(SafariBookLaunch.class.getResourceAsStream("/logging.properties"));
 		ProcessLoger.currentLevel = PLLevel.DEBUG;
 		SafariBookConfigure config = initialConfig(args);
+
 		SafariBookLaunch bookLaunch = new SafariBookLaunch(config);
 		try {
 			bookLaunch.launch();
@@ -52,6 +53,7 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 		//		config.setNextChainPageAnchorSelector("");
 		//		config.setProxyHost("");
 		//		config.setProxyPort(80);
+		//		config.setLoggerLevel(PLLevel.INFO);
 		String config_path = null;
 		if (args != null && args.length > 0) {
 			if ("-help".equalsIgnoreCase(args[0])) {

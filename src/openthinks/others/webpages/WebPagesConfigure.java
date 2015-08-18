@@ -7,6 +7,8 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Optional;
 import java.util.Properties;
 
+import openthinks.others.webpages.util.ProcessLoger.PLLevel;
+
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
 /**
@@ -34,6 +36,7 @@ public class WebPagesConfigure extends Properties {
 	public static final String PAGELINKOFCATALOGSELECTOR = "catalog-pagelinks-selector";
 	public static final String STARTCHAINPAGEURL = "pages-first-url";
 	public static final String NEXTCHAINPAGEANCHORSELECTOR = "pages-next-anchor-selector";
+	public static final String LOGGERLEVEL = "logger-level";
 
 	///////////////////////////
 	public static WebPagesConfigure create() {
@@ -237,5 +240,20 @@ public class WebPagesConfigure extends Properties {
 
 	public void setNextChainPageAnchorSelector(String value) {
 		setProperty(NEXTCHAINPAGEANCHORSELECTOR, value);
+	}
+
+	public PLLevel getLoggerLevel() {
+		PLLevel pLevel = null;
+		if (getProp(LOGGERLEVEL).isPresent()) {
+			pLevel = PLLevel.valueOf(getProp(LOGGERLEVEL).get());
+		}
+		if (pLevel == null) {
+			pLevel = PLLevel.INFO;
+		}
+		return pLevel;
+	}
+
+	public void setLoggerLevel(PLLevel level) {
+		setProperty(LOGGERLEVEL, level.name());
 	}
 }

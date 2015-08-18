@@ -38,7 +38,15 @@ public class ProcessLoger {
 	}
 
 	public enum PLLevel {
-		FATAL, ERROR, WARN, INFO, DEBUG
+		FATAL, ERROR, WARN, INFO, DEBUG;
+
+		public static PLLevel build(String level) {
+			try {
+				return PLLevel.valueOf(level);
+			} catch (Exception e) {
+				return null;
+			}
+		}
 	}
 
 	public static void log(PLLevel plevel, String... msgs) {
