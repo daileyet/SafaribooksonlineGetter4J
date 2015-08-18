@@ -1,5 +1,5 @@
 # SafaribooksonlineGetter4J
-The auto download for Safari online book
+The auto download for [Safari online book][1]
 
 ### How to use it?
 Execute the following command line:
@@ -60,3 +60,4 @@ java -jar SafariBookGetter.jar -config W:\Book\default_config.xml
 
 ```
 
+[1]:http://techbus.safaribooksonline.com/
