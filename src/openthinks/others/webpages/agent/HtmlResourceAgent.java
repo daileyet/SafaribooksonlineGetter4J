@@ -31,9 +31,9 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 import openthinks.others.webpages.keeper.ResourceKeep;
-import openthinks.others.webpages.util.ProcessLoger;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
@@ -65,7 +65,7 @@ public abstract class HtmlResourceAgent implements ResourceAgent {
 		try (PrintWriter writer = new PrintWriter(new FileOutputStream(keeper.getResourcePath()))) {
 			writer.write(textContent);
 		} catch (Exception e) {
-			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 	}
 
@@ -82,7 +82,7 @@ public abstract class HtmlResourceAgent implements ResourceAgent {
 				fileOutputStream.write(buff, 0, size);
 			}
 		} catch (IOException e) {
-			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 	}
 

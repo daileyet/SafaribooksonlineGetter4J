@@ -30,11 +30,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.logger.ProcessLogger;
+import openthinks.others.webpages.additional.AdditionalBooks;
+import openthinks.others.webpages.additional.AdditionalProcessor;
 import openthinks.others.webpages.agent.HtmlResourceAgent;
-import openthinks.others.webpages.util.ProcessLoger;
 import openthinks.others.webpages.util.ResourceInfo;
 
 import com.gargoylesoftware.htmlunit.WebRequest;
@@ -62,6 +65,7 @@ public class HtmlResourceKeeper extends AbstractResourceKeeper {
 		super();
 		this.htmlPage = htmlPage;
 		this.keepDir = keepDir;
+		this.htmlElement = this.htmlPage.getDocumentElement();
 	}
 
 	public final HtmlPage getHtmlPage() {
@@ -119,9 +123,19 @@ public class HtmlResourceKeeper extends AbstractResourceKeeper {
 		try {
 			return getHtmlPage().getFullyQualifiedUrl(relative);
 		} catch (MalformedURLException e) {
-			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 			return null;
 		}
 	}
 
+	public <T extends HtmlResourceAgent> Optional<AdditionalProcessor> getAdditionalProcessor(Class<T> clazz) {
+		return AdditionalBooks.lookup(clazz);
+	}
+
+	public <T extends HtmlResourceAgent> void doAdditionalProcessor(Class<T> clazz) {
+		ProcessLogger.debug(clazz.getName());
+		getAdditionalProcessor(clazz).ifPresent((aProcessor) -> {
+			aProcessor.process(this.htmlElement);
+		});
+	}
 }

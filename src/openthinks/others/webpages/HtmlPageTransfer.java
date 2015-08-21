@@ -30,14 +30,13 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.agent.HtmlCssResourceAgent;
 import openthinks.others.webpages.agent.HtmlImageResourceAgent;
 import openthinks.others.webpages.agent.HtmlJsResourceAgent;
 import openthinks.others.webpages.agent.HtmlPageResourceAgent;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
-import openthinks.others.webpages.util.ProcessLoger;
 
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlLink;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -73,46 +72,8 @@ public class HtmlPageTransfer {
 		processImgElements();
 		//style
 		processStylesheets();
-		//anchors
-		processAnchors();
-		//other pre
-		processOthers();
 		//body
 		processPage();
-	}
-
-	void processOthers() {
-		// process tag pre text content trim blank space
-		this.htmlPage.getElementsByTagName("pre").forEach((domEl) -> {
-			String text = domEl.getTextContent();
-			StringBuffer buff = new StringBuffer(text == null ? "" : text);
-			if (text != null) {
-				if (text.indexOf("'") == 0 || text.indexOf("\"") == 0) {
-					buff.deleteCharAt(0);
-				}
-				int len = text.length();
-				if (text.lastIndexOf("'") == (len - 1) || text.lastIndexOf("\"") == (len - 1)) {
-					buff.deleteCharAt(len - 1);
-				}
-
-			}
-			domEl.setTextContent(buff.toString().trim());
-		});
-
-	}
-
-	void processAnchors() {
-		this.htmlPage.getAnchors().stream().filter((HtmlAnchor anchor) -> {
-			return anchor.hasAttribute("href") && !anchor.getAttribute("href").isEmpty();
-		}).forEach((HtmlAnchor anchor) -> {
-			String hrefURL = anchor.getHrefAttribute();
-			int start = hrefURL.lastIndexOf("/");
-			if (start != -1) {
-				hrefURL = hrefURL.substring(start + 1);
-				anchor.setAttribute("href", hrefURL);
-			}
-		});
-
 	}
 
 	void processPage() {
@@ -177,7 +138,7 @@ public class HtmlPageTransfer {
 		try {
 			return this.htmlPage.getFullyQualifiedUrl(relative);
 		} catch (Exception e) {
-			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 			return null;
 		}
 	}

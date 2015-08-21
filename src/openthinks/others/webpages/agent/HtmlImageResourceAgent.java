@@ -34,9 +34,9 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
 import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
-import openthinks.others.webpages.util.ProcessLoger;
 import openthinks.others.webpages.util.ResourceType;
 
 import org.apache.commons.codec.binary.Base64;
@@ -72,7 +72,7 @@ public class HtmlImageResourceAgent extends HtmlBinaryResourceAgent {
 				ImageIO.write(imageReader.read(0), imageReader.getFormatName(), new File(keeper.getResourcePath()));
 			}
 		} catch (Exception e) {
-			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 			WebResponse wrp = keeper.loadWebResponse(keeper.getResourceURL());
 			storeBinaryResource(wrp.getContentAsStream());
 		}

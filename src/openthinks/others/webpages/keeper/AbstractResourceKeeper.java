@@ -29,8 +29,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.exception.ResourceAlreadyExistException;
-import openthinks.others.webpages.util.ProcessLoger;
 import openthinks.others.webpages.util.ResourceInfo;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
@@ -55,10 +55,10 @@ public abstract class AbstractResourceKeeper implements ResourceKeep {
 			doKeep();
 			doChange();
 		} catch (ResourceAlreadyExistException e) {
-			ProcessLoger.debug(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.debug(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 			doChange();
 		} catch (Exception e) {
-			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 		keepListeners.doKeepAfter(this);
 	}

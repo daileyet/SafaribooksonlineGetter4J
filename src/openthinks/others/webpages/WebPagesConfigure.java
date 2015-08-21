@@ -7,7 +7,7 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Optional;
 import java.util.Properties;
 
-import openthinks.others.webpages.util.ProcessLoger.PLLevel;
+import openthinks.libs.utilities.logger.ProcessLogger.PLLevel;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 

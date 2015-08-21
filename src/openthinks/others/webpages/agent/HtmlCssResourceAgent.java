@@ -30,9 +30,9 @@ import java.net.URL;
 import java.util.regex.Matcher;
 
 import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
-import openthinks.others.webpages.util.ProcessLoger;
 import openthinks.others.webpages.util.ResourceType;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
@@ -61,7 +61,7 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 		try {
 			styleCtx = deepIntoRef(styleCtx, element);
 		} catch (Exception e) {
-			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 		storeTextResource(styleCtx);
 	}
@@ -104,7 +104,7 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 					sb,
 					"url(" + HtmlPageTransfer.RESOURCE_STYLE_REFERENCE_DIR + "/"
 							+ refKeeper.getResourceNameOfProundSign() + ")");
-			ProcessLoger.info("The resource which type:[" + wrp.getContentType() + "] url:[" + styleRefUrl
+			ProcessLogger.info("The resource which type:[" + wrp.getContentType() + "] url:[" + styleRefUrl
 					+ "] was download.");
 		}
 		matcher.appendTail(sb);

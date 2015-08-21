@@ -6,8 +6,8 @@ import java.net.URL;
 import java.util.List;
 
 import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.exception.LostConfigureItemException;
-import openthinks.others.webpages.util.ProcessLoger;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -57,16 +57,16 @@ public abstract class WebPagesLaunch {
 			if (config.needLogin().isPresent() && config.needLogin().get())
 				loginAndAuth(webClient);
 			travelWholePages(webClient);
-			ProcessLoger.info("All pages has been download.");
+			ProcessLogger.info("All pages has been download.");
 		} catch (Exception e) {
-			ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 	}
 
 	protected void loginAndAuth(WebClient webClient) throws FailingHttpStatusCodeException, MalformedURLException,
 			IOException {
 		webClient.getOptions().setJavaScriptEnabled(true);
-		ProcessLoger.info("Open login page...");
+		ProcessLogger.info("Open login page...");
 		if (!config.getLoginPageUrl().isPresent())
 			throw new LostConfigureItemException("Lost configuration for login page url.");
 		if (!config.getLoginFormSelector().isPresent())
@@ -103,9 +103,9 @@ public abstract class WebPagesLaunch {
 		userName.setValueAttribute(config.getLoginAuthInputValue().get());
 		HtmlPasswordInput userPass = loginForm.getInputByName(config.getLoginAuthPassInputName().get());
 		userPass.setValueAttribute(config.getLoginAuthPassInputValue().get());
-		ProcessLoger.info("Simulate the login action...");
+		ProcessLogger.info("Simulate the login action...");
 		button.click();
-		ProcessLoger.info("Login success.");
+		ProcessLogger.info("Login success.");
 	}
 
 	protected final void travelWholePages(WebClient webClient) {
@@ -114,13 +114,13 @@ public abstract class WebPagesLaunch {
 		} else if (config.getStartChainPageUrl().isPresent()) {
 			chainResolver(webClient);
 		} else {
-			ProcessLoger.warn("No url configuration.");
+			ProcessLogger.warn("No url configuration.");
 		}
 	}
 
 	protected void catalogResolver(WebClient webClient) {
 		String catalogURL = config.getCatalogPageUrl().get();
-		ProcessLoger.info("Go to download the catalog page:" + catalogURL);
+		ProcessLogger.info("Go to download the catalog page:" + catalogURL);
 		if (!config.getPageLinkOfCatalogSelector().isPresent())
 			throw new LostConfigureItemException("Lost configuration for page link selector on catalog page.");
 		try {
@@ -138,26 +138,26 @@ public abstract class WebPagesLaunch {
 						DomElement el = (DomElement) domNode;
 						String relativeUrl = el.getAttribute("href");
 						HtmlPage currentPage = null;
-						ProcessLoger.debug(relativeUrl);
+						ProcessLogger.debug(relativeUrl);
 						try {
 							URL currentUrl = catalogPage.getFullyQualifiedUrl(relativeUrl);
-							ProcessLoger.debug(currentUrl.toString());
+							ProcessLogger.debug(currentUrl.toString());
 							currentPage = webClient.getPage(currentUrl);
-							ProcessLoger.info("Go to download page:" + currentUrl);
+							ProcessLogger.info("Go to download page:" + currentUrl);
 							HtmlPageTransfer.create(currentPage, config.getKeepDir().get()).transfer();
 						} catch (Exception e) {
-							ProcessLoger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+							ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 						}
 					});
 		} catch (FailingHttpStatusCodeException | IOException | LostConfigureItemException e) {
-			ProcessLoger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 	}
 
 	protected void chainResolver(WebClient webClient) {
 		String nextURL = config.getStartChainPageUrl().get();
 		HtmlAnchor nextAnchor = null;
-		ProcessLoger.info("Go to download the start page:" + nextURL);
+		ProcessLogger.info("Go to download the start page:" + nextURL);
 		if (!config.getNextChainPageAnchorSelector().isPresent())
 			throw new LostConfigureItemException("Lost configuration for next page link selector on each page.");
 		do {
@@ -167,9 +167,9 @@ public abstract class WebPagesLaunch {
 				nextAnchor = (HtmlAnchor) anchors;
 				nextURL = currentPage.getFullyQualifiedUrl(nextAnchor.getHrefAttribute()).toString();
 				HtmlPageTransfer.create(currentPage, config.getKeepDir().get()).transfer();
-				ProcessLoger.info("Go to download next page:" + nextURL);
+				ProcessLogger.info("Go to download next page:" + nextURL);
 			} catch (Exception e) {
-				ProcessLoger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+				ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 				nextAnchor = null;
 			}
 		} while (nextAnchor != null);
