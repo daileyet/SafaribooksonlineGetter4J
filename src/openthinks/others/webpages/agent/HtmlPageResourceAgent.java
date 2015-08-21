@@ -45,6 +45,7 @@ public class HtmlPageResourceAgent extends HtmlTextResourceAgent {
 	@Override
 	public void makeKeepToLocal(HtmlElement element) throws IOException {
 		String html = keeper.getHtmlPage().asXml();
+		html = html.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "<!DOCTYPE html>");
 		storeTextResource(html);
 	}
 
