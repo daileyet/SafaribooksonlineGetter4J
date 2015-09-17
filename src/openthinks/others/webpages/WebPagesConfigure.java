@@ -62,7 +62,11 @@ public class WebPagesConfigure extends Properties {
 	}
 
 	protected Optional<String> getProp(String propertyName) {
-		return Optional.of(this.getProperty(propertyName));
+		try {
+			return Optional.of(this.getProperty(propertyName));
+		} catch (Exception e) {
+		}
+		return Optional.empty();
 	}
 
 	@SuppressWarnings("deprecation")
