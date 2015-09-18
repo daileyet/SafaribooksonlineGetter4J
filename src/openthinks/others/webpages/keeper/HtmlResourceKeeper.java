@@ -134,10 +134,13 @@ public class HtmlResourceKeeper extends AbstractResourceKeeper {
 
 	public <T extends HtmlResourceAgent> void doAdditionalProcessor(Class<T> clazz) {
 		ProcessLogger.debug(clazz.getName());
-		Optional<AdditionalProcessor> ops = getAdditionalProcessor(clazz);
-		if (ops != null)
-			ops.ifPresent((aProcessor) -> {
-				aProcessor.process(this.htmlElement);
-			});
+		getAdditionalProcessor(clazz).ifPresent((aProcessor) -> {
+			aProcessor.process(this.htmlElement);
+		});
+	}
+
+	public boolean nameEncode() {
+
+		return false;
 	}
 }

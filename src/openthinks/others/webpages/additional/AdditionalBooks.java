@@ -46,6 +46,6 @@ public final class AdditionalBooks {
 	}
 
 	public final static Optional<AdditionalProcessor> lookup(Class<? extends HtmlResourceAgent> key) {
-		return processors.get(key);
+		return processors.get(key) == null ? Optional.empty() : processors.get(key);
 	}
 }

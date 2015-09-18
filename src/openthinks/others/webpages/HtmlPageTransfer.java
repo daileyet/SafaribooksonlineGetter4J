@@ -35,8 +35,10 @@ import openthinks.others.webpages.agent.HtmlCssResourceAgent;
 import openthinks.others.webpages.agent.HtmlImageResourceAgent;
 import openthinks.others.webpages.agent.HtmlJsResourceAgent;
 import openthinks.others.webpages.agent.HtmlPageResourceAgent;
+import openthinks.others.webpages.agent.HtmlVideoResourceAgent;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlLink;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -70,6 +72,8 @@ public class HtmlPageTransfer {
 		processScriptElements();
 		//image
 		processImgElements();
+		//video
+		processVideoElements();
 		//style
 		processStylesheets();
 		//body
@@ -116,6 +120,20 @@ public class HtmlPageTransfer {
 		});
 	}
 
+	void processVideoElements() {
+		htmlPage.querySelectorAll("video source").stream().filter((node) -> {
+			HtmlElement e = (HtmlElement) node;
+			return e.hasAttribute("src");
+		}).forEach((domnode) -> {
+			HtmlElement el = (HtmlElement) domnode;
+			final HtmlResourceKeeper keeper = new HtmlResourceKeeper(el, getVideoKeepDir());
+			URL url = getFullyQualifiedUrl(el.getAttribute("src"));
+			keeper.initial(url, () -> {
+				return new HtmlVideoResourceAgent(keeper);
+			}).keep();
+		});
+	}
+
 	void processScriptElements() {
 		htmlPage.getElementsByTagName("script").stream().filter((domNode) -> {
 			return domNode.hasAttribute("src") && !domNode.getAttribute("src").isEmpty();
@@ -155,6 +173,10 @@ public class HtmlPageTransfer {
 		return new File(keepDir, RESOURCE_IMAGE_DIR);
 	}
 
+	public File getVideoKeepDir() {
+		return new File(keepDir, RESOURCE_VIDEO_DIR);
+	}
+
 	/**
 	 * get the resource which referenced by <code>url()</code> from css save dir 
 	 * @return File
@@ -171,6 +193,7 @@ public class HtmlPageTransfer {
 	public static final String RESOURCE_STYLE_DIR = "style";
 	public static final String RESOURCE_SCRIPT_DIR = "js";
 	public static final String RESOURCE_IMAGE_DIR = "images";
+	public static final String RESOURCE_VIDEO_DIR = "videos";
 
 	public static final String RESOURCE_STYLE_REFERENCE_DIR = "styleref";
 	public static final String RESOURCE_STYLE_REFERENCE_REGEX = "url\\(['\"]?([^\\(\\)'\"]+)['\"]?\\)";

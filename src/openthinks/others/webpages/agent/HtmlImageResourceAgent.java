@@ -89,11 +89,16 @@ public class HtmlImageResourceAgent extends HtmlBinaryResourceAgent {
 		String imgName = url.toString();
 		int start = imgName.lastIndexOf("/");
 		imgName = imgName.substring(start + 1);
-		imgName = Base64.encodeBase64String(imgName.getBytes());
-		if (imgName.indexOf(".") == -1) {
-			imgName = imgName + ".jpg";
+
+		String imgSuffix = ".jpg";
+		int end = imgName.lastIndexOf(".");
+		if (end != -1) {
+			imgSuffix = imgName.substring(end);
+			imgName = imgName.substring(0, end);
 		}
-		return imgName;
+		if (keeper.nameEncode())
+			imgName = Base64.encodeBase64String(imgName.getBytes());
+		return imgName + imgSuffix;
 	}
 
 }
