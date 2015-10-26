@@ -24,8 +24,6 @@
 */
 package openthinks.others.webpages.agent;
 
-import java.net.URL;
-
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
@@ -39,18 +37,6 @@ public class HtmlCssImageResourceAgent extends HtmlImageResourceAgent {
 
 	public HtmlCssImageResourceAgent(HtmlResourceKeeper keeper) {
 		super(keeper);
-	}
-
-	@Override
-	public String resolve(URL url) {
-		String name = url.toString();
-		int start = name.lastIndexOf("/");
-		int end = name.indexOf("?");
-		if (end != -1 && start < end)
-			name = name.substring(start + 1, end);
-		else
-			name = name.substring(start + 1);
-		return name;
 	}
 
 	@Override

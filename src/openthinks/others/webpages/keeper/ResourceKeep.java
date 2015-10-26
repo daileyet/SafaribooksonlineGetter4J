@@ -55,11 +55,12 @@ public interface ResourceKeep {
 	public default String resourceNameOf(URL url) {
 		String name = url.toString();
 		int start = name.lastIndexOf("/");
-		int end = name.indexOf("?");
-		if (end != -1 && start < end)
-			name = name.substring(start + 1, end);
-		else
-			name = name.substring(start + 1);
+		//		int end = name.indexOf("?");
+		//		if (end != -1 && start < end)
+		//			name = name.substring(start + 1, end);
+		//		else
+		name = name.substring(start + 1);
+		name = name.replaceAll("[^0-9A-Za-z_\\-\\.]", "_");
 		return name;
 	}
 

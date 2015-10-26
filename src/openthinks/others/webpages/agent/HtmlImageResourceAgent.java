@@ -64,6 +64,9 @@ public class HtmlImageResourceAgent extends HtmlBinaryResourceAgent {
 	public void makeKeepToLocal(HtmlElement element) throws IOException {
 		try {
 			WebResponse wrp = keeper.loadWebResponse(keeper.getResourceURL());
+			if ("image/svg+xml".equalsIgnoreCase(wrp.getContentType())) {//issue for svg image
+				throw new Exception("SVG image.");
+			}
 			ImageInputStream iis = ImageIO.createImageInputStream(wrp.getContentAsStream());
 			Iterator<ImageReader> iter = ImageIO.getImageReaders(iis);
 			if (iter.hasNext()) {
@@ -72,7 +75,7 @@ public class HtmlImageResourceAgent extends HtmlBinaryResourceAgent {
 				ImageIO.write(imageReader.read(0), imageReader.getFormatName(), new File(keeper.getResourcePath()));
 			}
 		} catch (Exception e) {
-			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.info(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 			WebResponse wrp = keeper.loadWebResponse(keeper.getResourceURL());
 			storeBinaryResource(wrp.getContentAsStream());
 		}

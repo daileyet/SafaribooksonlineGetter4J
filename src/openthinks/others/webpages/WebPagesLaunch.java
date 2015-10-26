@@ -158,14 +158,27 @@ public abstract class WebPagesLaunch {
 		String nextURL = config.getStartChainPageUrl().get();
 		HtmlAnchor nextAnchor = null;
 		ProcessLogger.info("Go to download the start page:" + nextURL);
-		if (!config.getNextChainPageAnchorSelector().isPresent())
-			throw new LostConfigureItemException("Lost configuration for next page link selector on each page.");
+		if (!config.getNextChainPageAnchorSelector().isPresent()) {//enhance for no next anchor
+			HtmlPage currentPage;
+			try {
+				currentPage = webClient.getPage(nextURL);
+				HtmlPageTransfer.create(currentPage, config.getKeepDir().get()).transfer();
+				ProcessLogger.info("Go to download next page:" + nextURL);
+			} catch (FailingHttpStatusCodeException | IOException e) {
+				ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			}
+			return;
+			//throw new LostConfigureItemException("Lost configuration for next page link selector on each page.");
+		}
+
 		do {
 			try {
 				HtmlPage currentPage = webClient.getPage(nextURL);
 				DomNode anchors = currentPage.getBody().querySelector(config.getNextChainPageAnchorSelector().get());
 				nextAnchor = (HtmlAnchor) anchors;
-				nextURL = currentPage.getFullyQualifiedUrl(nextAnchor.getHrefAttribute()).toString();
+				if (nextAnchor != null) {// issue for no found next anchor
+					nextURL = currentPage.getFullyQualifiedUrl(nextAnchor.getHrefAttribute()).toString();
+				}
 				HtmlPageTransfer.create(currentPage, config.getKeepDir().get()).transfer();
 				ProcessLogger.info("Go to download next page:" + nextURL);
 			} catch (Exception e) {

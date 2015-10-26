@@ -68,7 +68,7 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 
 	@Override
 	public void makeChangeToLocal(HtmlElement element) {
-		element.setAttribute("href", HtmlPageTransfer.RESOURCE_STYLE_DIR + "/" + keeper.getResourceNameOfProundSign());
+		element.setAttribute("href", HtmlPageTransfer.RESOURCE_STYLE_DIR + "/" + keeper.getResourceName());
 	}
 
 	/**
@@ -117,5 +117,14 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 	 */
 	public File getCssRefDir() {
 		return new File(keeper.getKeepDir(), HtmlPageTransfer.RESOURCE_STYLE_REFERENCE_DIR);
+	}
+
+	@Override
+	public String resolve(URL url) {
+		String cssName = super.resolve(url);
+		if (!cssName.endsWith(".css")) {
+			cssName = cssName + ".css";
+		}
+		return cssName;
 	}
 }

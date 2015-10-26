@@ -25,6 +25,7 @@
 package openthinks.others.webpages.agent;
 
 import java.io.IOException;
+import java.net.URL;
 
 import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
@@ -76,19 +77,26 @@ public class HtmlPageResourceAgent extends HtmlTextResourceAgent {
 		//
 		//		});
 
-		htmlPage.getElementsByTagName("a").stream().filter((anchor) -> {
-			return anchor.hasAttribute("href") && !anchor.getAttribute("href").isEmpty();
-		}).forEach((anchor) -> {
-			String hrefURL = anchor.getAttribute("href");
-			ProcessLogger.debug("Process anchors before", hrefURL);
-			int start = hrefURL.lastIndexOf("/");
-			if (start != -1) {
-				hrefURL = hrefURL.substring(start + 1);
-				anchor.setAttribute("href", hrefURL);
-				ProcessLogger.debug("Process anchors end", hrefURL);
-			}
+		htmlPage.getElementsByTagName("a")
+				.stream()
+				.filter((anchor) -> {
+					return anchor.hasAttribute("href") && !anchor.getAttribute("href").isEmpty();
+				})
+				.filter((anchor) -> {
+					return !anchor.getAttribute("href").toLowerCase().startsWith("http://")
+							&& !anchor.getAttribute("href").toLowerCase().startsWith("https://")
+							&& !anchor.getAttribute("href").startsWith("//");
+				}).forEach((anchor) -> {
+					String hrefURL = anchor.getAttribute("href");
+					ProcessLogger.debug("Process anchors before", hrefURL);
+					int start = hrefURL.lastIndexOf("/");
+					if (start != -1) {
+						hrefURL = hrefURL.substring(start + 1);
+						anchor.setAttribute("href", hrefURL);
+						ProcessLogger.debug("Process anchors end", hrefURL);
+					}
 
-		});
+				});
 
 	}
 
@@ -111,6 +119,15 @@ public class HtmlPageResourceAgent extends HtmlTextResourceAgent {
 
 		//process script 
 
+	}
+
+	@Override
+	public String resolve(URL url) {
+		String rst = super.resolve(url);
+		if (rst == null || "".equals(rst)) {
+			rst = "index.html";
+		}
+		return rst;
 	}
 
 }

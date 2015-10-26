@@ -78,17 +78,21 @@ public interface ResourceAgent {
 	public default String resolve(URL url) {
 		String name = url.toString();
 		int start = name.lastIndexOf("/");
-		int end = name.indexOf("?");
+		int end = 0;
+		/*
+		end = name.indexOf("?");
 		if (end != -1 && start < end)
 			name = name.substring(start + 1, end);
 		else
 			name = name.substring(start + 1);
+		*/
 		//
+		name = name.substring(start + 1);
 		end = name.lastIndexOf("#");
 		if (end != -1) {
 			name = name.substring(0, end);
 		}
-
+		name = name.replaceAll("[^0-9A-Za-z_\\-\\.]+", "_");
 		return name;
 	}
 
@@ -101,11 +105,16 @@ public interface ResourceAgent {
 	public default String resolveOfPoundSign(URL url) {
 		String name = url.toString();
 		int start = name.lastIndexOf("/");
-		int end = name.indexOf("?");
+		/*		
+		int end = 0;
+		end = name.indexOf("?");
 		if (end != -1 && start < end)
 			name = name.substring(start + 1, end);
 		else
 			name = name.substring(start + 1);
+		*/
+		name = name.substring(start + 1);
+		name = name.replaceAll("[^0-9A-Za-z_\\-\\.]+", "_");
 		return name;
 	}
 }
