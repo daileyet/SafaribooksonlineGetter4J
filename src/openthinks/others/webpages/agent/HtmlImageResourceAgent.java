@@ -92,7 +92,7 @@ public class HtmlImageResourceAgent extends HtmlBinaryResourceAgent {
 		String imgName = url.toString();
 		int start = imgName.lastIndexOf("/");
 		imgName = imgName.substring(start + 1);
-
+		imgName = imgName.replaceAll("[^0-9A-Za-z_\\-\\.]", "_");
 		String imgSuffix = ".jpg";
 		int end = imgName.lastIndexOf(".");
 		if (end != -1) {
