@@ -75,7 +75,7 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 				head.getElementsByTagName("script")
 						.stream()
 						.filter((HtmlElement script) -> {
-							return script.hasAttribute("src")
+							return !script.hasAttribute("src")
 									&& "text/javascript".equalsIgnoreCase(script.getAttribute("type"))
 									&& script.getTextContent().contains("CookieState");
 						}).forEach((HtmlElement script) -> {

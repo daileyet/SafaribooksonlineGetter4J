@@ -84,8 +84,7 @@ public class HtmlPageResourceAgent extends HtmlTextResourceAgent {
 				})
 				.filter((anchor) -> {
 					return !anchor.getAttribute("href").toLowerCase().startsWith("http://")
-							&& !anchor.getAttribute("href").toLowerCase().startsWith("https://")
-							&& !anchor.getAttribute("href").startsWith("//");
+							&& !anchor.getAttribute("href").toLowerCase().startsWith("https://");
 				}).forEach((anchor) -> {
 					String hrefURL = anchor.getAttribute("href");
 					ProcessLogger.debug("Process anchors before", hrefURL);
