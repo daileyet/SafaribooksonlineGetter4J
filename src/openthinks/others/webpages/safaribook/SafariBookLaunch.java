@@ -1,11 +1,13 @@
 package openthinks.others.webpages.safaribook;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.LogManager;
 
 import openthinks.libs.utilities.CommonUtilities;
 import openthinks.libs.utilities.logger.ProcessLogger;
+import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.WebPagesLaunch;
 import openthinks.others.webpages.additional.AdditionalBooks;
 import openthinks.others.webpages.additional.AdditionalProcessor;
@@ -13,6 +15,7 @@ import openthinks.others.webpages.agent.HtmlPageResourceAgent;
 import openthinks.others.webpages.exception.LostConfigureItemException;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlMeta;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
@@ -79,8 +82,15 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 									&& "text/javascript".equalsIgnoreCase(script.getAttribute("type"))
 									&& script.getTextContent().contains("CookieState");
 						}).forEach((HtmlElement script) -> {
-							script.remove();
-						});
+							script.setTextContent("");
+							//clear script
+							});
+
+				HtmlMeta metaElement = (HtmlMeta) page.createElement("meta");
+				metaElement.setAttribute("content", "text/html; charset=utf-8");
+				metaElement.setAttribute("http-equiv", "Content-Type");
+				head.appendChild(metaElement);
+
 			}
 		});
 
@@ -146,5 +156,11 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 		System.out.println("\t -config");
 		System.out.println("example:");
 		System.out.println(" -config W:\\keeper\\configure.xml");
+	}
+
+	@Override
+	public HtmlPageTransfer getHtmlPageTransfer(HtmlPage htmlPage, File file) {
+
+		return SafariBookPageTransfer.create(htmlPage, file);
 	}
 }

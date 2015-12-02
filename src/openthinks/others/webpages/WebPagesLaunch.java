@@ -1,5 +1,6 @@
 package openthinks.others.webpages;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -125,7 +126,9 @@ public abstract class WebPagesLaunch {
 			throw new LostConfigureItemException("Lost configuration for page link selector on catalog page.");
 		try {
 			HtmlPage catalogPage = webClient.getPage(catalogURL);
-			HtmlPageTransfer.create(catalogPage.cloneNode(true), config.getKeepDir().get()).transfer();
+			HtmlPageTransfer htmlPageTransfer = getHtmlPageTransfer(catalogPage.cloneNode(true), config.getKeepDir()
+					.get());
+			htmlPageTransfer.transfer();
 			DomNodeList<DomNode> links = catalogPage.getBody().querySelectorAll(
 					config.getPageLinkOfCatalogSelector().get());
 
@@ -134,25 +137,36 @@ public abstract class WebPagesLaunch {
 						DomElement el = (DomElement) domNode;
 						return el.hasAttribute("href") && !el.getAttribute("href").isEmpty()
 								&& !el.getAttribute("href").startsWith("#");
-					}).forEach((domNode) -> {
-						DomElement el = (DomElement) domNode;
-						String relativeUrl = el.getAttribute("href");
-						HtmlPage currentPage = null;
-						ProcessLogger.debug(relativeUrl);
-						try {
-							URL currentUrl = catalogPage.getFullyQualifiedUrl(relativeUrl);
-							ProcessLogger.debug(currentUrl.toString());
-							currentPage = webClient.getPage(currentUrl);
-							ProcessLogger.info("Go to download page:" + currentUrl);
-							HtmlPageTransfer.create(currentPage, config.getKeepDir().get()).transfer();
-						} catch (Exception e) {
-							ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
-						}
-					});
+					})
+					.forEach(
+							(domNode) -> {
+								DomElement el = (DomElement) domNode;
+								String relativeUrl = el.getAttribute("href");
+								HtmlPage currentPage = null;
+								ProcessLogger.debug(relativeUrl);
+								try {
+									URL currentUrl = catalogPage.getFullyQualifiedUrl(relativeUrl);
+									ProcessLogger.debug(currentUrl.toString());
+									currentPage = webClient.getPage(currentUrl);
+									ProcessLogger.info("Go to download page:" + currentUrl);
+									HtmlPageTransfer pageTransfer = getHtmlPageTransfer(currentPage, config
+											.getKeepDir().get());
+									pageTransfer.transfer();
+								} catch (Exception e) {
+									ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+								}
+							});
 		} catch (FailingHttpStatusCodeException | IOException | LostConfigureItemException e) {
 			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 	}
+
+	/**
+	 * @param htmlPage
+	 * @param file 
+	 * @return
+	 */
+	public abstract HtmlPageTransfer getHtmlPageTransfer(HtmlPage htmlPage, File file);
 
 	protected void chainResolver(WebClient webClient) {
 		String nextURL = config.getStartChainPageUrl().get();
@@ -162,7 +176,9 @@ public abstract class WebPagesLaunch {
 			HtmlPage currentPage;
 			try {
 				currentPage = webClient.getPage(nextURL);
-				HtmlPageTransfer.create(currentPage, config.getKeepDir().get()).transfer();
+				HtmlPageTransfer htmlPageTransfer = getHtmlPageTransfer(currentPage, config.getKeepDir().get());
+				htmlPageTransfer.transfer();
+
 				ProcessLogger.info("Go to download next page:" + nextURL);
 			} catch (FailingHttpStatusCodeException | IOException e) {
 				ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
@@ -179,7 +195,8 @@ public abstract class WebPagesLaunch {
 				if (nextAnchor != null) {// issue for no found next anchor
 					nextURL = currentPage.getFullyQualifiedUrl(nextAnchor.getHrefAttribute()).toString();
 				}
-				HtmlPageTransfer.create(currentPage, config.getKeepDir().get()).transfer();
+				HtmlPageTransfer pageTransfer = getHtmlPageTransfer(currentPage, config.getKeepDir().get());
+				pageTransfer.transfer();
 				ProcessLogger.info("Go to download next page:" + nextURL);
 			} catch (Exception e) {
 				ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());

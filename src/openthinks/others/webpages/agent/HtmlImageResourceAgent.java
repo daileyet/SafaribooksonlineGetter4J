@@ -35,7 +35,6 @@ import javax.imageio.stream.ImageInputStream;
 
 import openthinks.libs.utilities.CommonUtilities;
 import openthinks.libs.utilities.logger.ProcessLogger;
-import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 import openthinks.others.webpages.util.ResourceType;
 
@@ -84,7 +83,7 @@ public class HtmlImageResourceAgent extends HtmlBinaryResourceAgent {
 
 	@Override
 	public void makeChangeToLocal(HtmlElement element) {
-		element.setAttribute("src", HtmlPageTransfer.RESOURCE_IMAGE_DIR + "/" + keeper.getResourceName());
+		element.setAttribute("src", pageTransfer().getImagePath() + "/" + keeper.getResourceName());
 	}
 
 	@Override

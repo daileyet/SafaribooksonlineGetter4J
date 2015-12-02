@@ -27,7 +27,6 @@ package openthinks.others.webpages.agent;
 
 import java.net.URL;
 
-import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 
 import org.apache.commons.codec.binary.Base64;
@@ -49,7 +48,7 @@ public class HtmlVideoResourceAgent extends HtmlBinaryResourceAgent {
 
 	@Override
 	public void makeChangeToLocal(HtmlElement element) {
-		element.setAttribute("src", HtmlPageTransfer.RESOURCE_VIDEO_DIR + "/" + keeper.getResourceName());
+		element.setAttribute("src", pageTransfer().getVideoPath() + "/" + keeper.getResourceName());
 	}
 
 	@Override
