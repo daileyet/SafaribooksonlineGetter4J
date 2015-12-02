@@ -52,10 +52,10 @@ import com.gargoylesoftware.htmlunit.html.HtmlScript;
  */
 public class HtmlPageTransfer {
 
-	private File keepDir;
+	protected File keepDir;
 	private HtmlPage htmlPage;
 
-	private HtmlPageTransfer(HtmlPage htmlPage, File keepDir) {
+	protected HtmlPageTransfer(HtmlPage htmlPage, File keepDir) {
 		super();
 		this.htmlPage = htmlPage;
 		this.keepDir = keepDir;
@@ -81,7 +81,7 @@ public class HtmlPageTransfer {
 	}
 
 	void processPage() {
-		final HtmlResourceKeeper keeper = new HtmlResourceKeeper(htmlPage, keepDir);
+		final HtmlResourceKeeper keeper = new HtmlResourceKeeper(this, htmlPage, keepDir);
 		keeper.initial(htmlPage.getUrl(), () -> {
 			return new HtmlPageResourceAgent(keeper);
 		}).keep();
@@ -98,7 +98,7 @@ public class HtmlPageTransfer {
 
 				}).forEach((linkNode) -> {
 					HtmlLink link = (HtmlLink) linkNode;
-					final HtmlResourceKeeper keeper = new HtmlResourceKeeper(link, getCssKeepDir());
+					final HtmlResourceKeeper keeper = new HtmlResourceKeeper(this, link, getCssKeepDir());
 					URL url = getFullyQualifiedUrl(link.getHrefAttribute());
 					keeper.initial(url, () -> {
 						return new HtmlCssResourceAgent(keeper);
@@ -111,7 +111,7 @@ public class HtmlPageTransfer {
 			return domNode.hasAttribute("src") && !domNode.getAttribute("src").isEmpty();
 		}).forEach((imgNode) -> {
 			HtmlImage el = (HtmlImage) imgNode;
-			final HtmlResourceKeeper keeper = new HtmlResourceKeeper(el, getImageKeepDir());
+			final HtmlResourceKeeper keeper = new HtmlResourceKeeper(this, el, getImageKeepDir());
 			URL url = getFullyQualifiedUrl(imgNode.getAttribute("src"));
 			keeper.initial(url, () -> {
 				return new HtmlImageResourceAgent(keeper);
@@ -126,7 +126,7 @@ public class HtmlPageTransfer {
 			return e.hasAttribute("src");
 		}).forEach((domnode) -> {
 			HtmlElement el = (HtmlElement) domnode;
-			final HtmlResourceKeeper keeper = new HtmlResourceKeeper(el, getVideoKeepDir());
+			final HtmlResourceKeeper keeper = new HtmlResourceKeeper(this, el, getVideoKeepDir());
 			URL url = getFullyQualifiedUrl(el.getAttribute("src"));
 			keeper.initial(url, () -> {
 				return new HtmlVideoResourceAgent(keeper);
@@ -139,7 +139,7 @@ public class HtmlPageTransfer {
 			return domNode.hasAttribute("src") && !domNode.getAttribute("src").isEmpty();
 		}).forEach((scriptNode) -> {
 
-			final HtmlResourceKeeper keeper = new HtmlResourceKeeper((HtmlScript) scriptNode, getJsKeepDir());
+			final HtmlResourceKeeper keeper = new HtmlResourceKeeper(this, (HtmlScript) scriptNode, getJsKeepDir());
 			URL url = getFullyQualifiedUrl(scriptNode.getAttribute("src"));
 			keeper.initial(url, () -> {
 				return new HtmlJsResourceAgent(keeper);
@@ -165,16 +165,32 @@ public class HtmlPageTransfer {
 		return new File(keepDir, RESOURCE_SCRIPT_DIR);
 	}
 
+	public String getJsPath() {
+		return RESOURCE_SCRIPT_DIR;
+	}
+
 	public File getCssKeepDir() {
 		return new File(keepDir, RESOURCE_STYLE_DIR);
+	}
+
+	public String getCssPath() {
+		return RESOURCE_STYLE_DIR;
 	}
 
 	public File getImageKeepDir() {
 		return new File(keepDir, RESOURCE_IMAGE_DIR);
 	}
 
+	public String getImagePath() {
+		return RESOURCE_IMAGE_DIR;
+	}
+
 	public File getVideoKeepDir() {
 		return new File(keepDir, RESOURCE_VIDEO_DIR);
+	}
+
+	public String getVideoPath() {
+		return RESOURCE_VIDEO_DIR;
 	}
 
 	/**
@@ -182,7 +198,11 @@ public class HtmlPageTransfer {
 	 * @return File
 	 */
 	public File getCssRefKeepDir() {
-		return new File(keepDir, RESOURCE_STYLE_REFERENCE_DIR);
+		return new File(getCssKeepDir(), RESOURCE_STYLE_REFERENCE_DIR);
+	}
+
+	public String getCssRefPath() {
+		return RESOURCE_STYLE_REFERENCE_DIR;
 	}
 
 	public static HtmlPageTransfer create(HtmlPage htmlPage, File keepDir) {

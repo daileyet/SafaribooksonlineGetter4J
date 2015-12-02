@@ -26,7 +26,6 @@ package openthinks.others.webpages.agent;
 
 import java.io.IOException;
 
-import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 import openthinks.others.webpages.util.ResourceType;
 
@@ -55,6 +54,6 @@ public class HtmlJsResourceAgent extends HtmlTextResourceAgent {
 
 	@Override
 	public void makeChangeToLocal(HtmlElement element) {
-		element.setAttribute("src", HtmlPageTransfer.RESOURCE_SCRIPT_DIR + "/" + keeper.getResourceNameOfProundSign());
+		element.setAttribute("src", pageTransfer().getJsPath() + "/" + keeper.getResourceNameOfProundSign());
 	}
 }

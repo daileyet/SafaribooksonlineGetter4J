@@ -32,6 +32,7 @@ import java.io.PrintWriter;
 
 import openthinks.libs.utilities.CommonUtilities;
 import openthinks.libs.utilities.logger.ProcessLogger;
+import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 import openthinks.others.webpages.keeper.ResourceKeep;
 
@@ -55,6 +56,10 @@ public abstract class HtmlResourceAgent implements ResourceAgent {
 	@Override
 	public <T extends ResourceKeep> T getKeeper() {
 		return ((T) keeper);
+	}
+
+	public HtmlPageTransfer pageTransfer() {
+		return this.keeper.getPageTransfer();
 	}
 
 	/**

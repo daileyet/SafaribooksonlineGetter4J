@@ -35,6 +35,7 @@ import java.util.function.Supplier;
 
 import openthinks.libs.utilities.CommonUtilities;
 import openthinks.libs.utilities.logger.ProcessLogger;
+import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.additional.AdditionalBooks;
 import openthinks.others.webpages.additional.AdditionalProcessor;
 import openthinks.others.webpages.agent.HtmlResourceAgent;
@@ -54,18 +55,25 @@ public class HtmlResourceKeeper extends AbstractResourceKeeper {
 	protected File keepDir;
 	private HtmlResourceAgent resourceAgent;
 	private HtmlPage htmlPage;
+	private HtmlPageTransfer pageTransfer;
 
-	public HtmlResourceKeeper(HtmlElement htmlElement, File keepDir) {
+	public HtmlResourceKeeper(HtmlPageTransfer pageTransfer, HtmlElement htmlElement, File keepDir) {
 		super();
+		this.pageTransfer = pageTransfer;
 		this.htmlElement = htmlElement;
 		this.keepDir = keepDir;
 	}
 
-	public HtmlResourceKeeper(HtmlPage htmlPage, File keepDir) {
+	public HtmlResourceKeeper(HtmlPageTransfer pageTransfer, HtmlPage htmlPage, File keepDir) {
 		super();
+		this.pageTransfer = pageTransfer;
 		this.htmlPage = htmlPage;
 		this.keepDir = keepDir;
 		this.htmlElement = this.htmlPage.getDocumentElement();
+	}
+
+	public final HtmlPageTransfer getPageTransfer() {
+		return this.pageTransfer;
 	}
 
 	public final HtmlPage getHtmlPage() {

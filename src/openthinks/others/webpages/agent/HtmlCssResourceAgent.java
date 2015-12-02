@@ -68,7 +68,7 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 
 	@Override
 	public void makeChangeToLocal(HtmlElement element) {
-		element.setAttribute("href", HtmlPageTransfer.RESOURCE_STYLE_DIR + "/" + keeper.getResourceName());
+		element.setAttribute("href", pageTransfer().getCssPath() + "/" + keeper.getResourceName());
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 			String relativeURL = matcher.group(1);
 			URL styleRefUrl = keeper.getFullyQualifiedUrl(relativeURL);
 			WebResponse wrp = keeper.loadWebResponse(styleRefUrl);
-			final HtmlResourceKeeper refKeeper = new HtmlResourceKeeper(element, refDir);
+			final HtmlResourceKeeper refKeeper = new HtmlResourceKeeper(pageTransfer(), element, refDir);
 			if (wrp.getContentType().startsWith("image") || wrp.getContentType().startsWith("IMAGE")
 					|| ResourceType.IMAGE.isSupportSuffix(keeper.getResourceName())) {
 				refKeeper.initial(styleRefUrl, () -> {
@@ -100,10 +100,8 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 					return new HtmlBinaryResourceAgent(refKeeper);
 				}).keep();
 			}
-			matcher.appendReplacement(
-					sb,
-					"url(" + HtmlPageTransfer.RESOURCE_STYLE_REFERENCE_DIR + "/"
-							+ refKeeper.getResourceNameOfProundSign() + ")");
+			matcher.appendReplacement(sb,
+					"url(" + pageTransfer().getCssRefPath() + "/" + refKeeper.getResourceNameOfProundSign() + ")");
 			ProcessLogger.info("The resource which type:[" + wrp.getContentType() + "] url:[" + styleRefUrl
 					+ "] was download.");
 		}
@@ -116,7 +114,7 @@ public class HtmlCssResourceAgent extends HtmlTextResourceAgent {
 	 * @return File
 	 */
 	public File getCssRefDir() {
-		return new File(keeper.getKeepDir(), HtmlPageTransfer.RESOURCE_STYLE_REFERENCE_DIR);
+		return pageTransfer().getCssRefKeepDir();
 	}
 
 	@Override
