@@ -30,14 +30,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
-import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 import openthinks.others.webpages.keeper.ResourceKeep;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.openthinks.libs.utilities.CommonUtilities;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * The resource agent for HTML page

@@ -7,9 +7,8 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Optional;
 import java.util.Properties;
 
-import openthinks.libs.utilities.logger.ProcessLogger.PLLevel;
-
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.openthinks.libs.utilities.logger.ProcessLogger.PLLevel;
 
 /**
  * The configuration for {@link WebPagesLaunch}

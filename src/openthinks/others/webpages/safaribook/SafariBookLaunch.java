@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.LogManager;
 
-import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.WebPagesLaunch;
 import openthinks.others.webpages.additional.AdditionalBooks;
@@ -17,6 +15,8 @@ import openthinks.others.webpages.exception.LostConfigureItemException;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlMeta;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.openthinks.libs.utilities.CommonUtilities;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * Safari book online getter entry

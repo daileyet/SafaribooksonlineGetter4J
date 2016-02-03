@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
 
-import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.HtmlPageTransfer;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 import openthinks.others.webpages.util.ResourceType;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.openthinks.libs.utilities.CommonUtilities;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * The css resource agent of HTML page

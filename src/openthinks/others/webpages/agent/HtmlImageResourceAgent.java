@@ -33,8 +33,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
-import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 import openthinks.others.webpages.util.ResourceType;
 
@@ -42,6 +40,8 @@ import org.apache.commons.codec.binary.Base64;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.openthinks.libs.utilities.CommonUtilities;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * The image resource agent for HTML page

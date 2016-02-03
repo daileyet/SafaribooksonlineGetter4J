@@ -6,8 +6,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.exception.LostConfigureItemException;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
@@ -21,6 +19,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
+import com.openthinks.libs.utilities.CommonUtilities;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * The web pages download launcher

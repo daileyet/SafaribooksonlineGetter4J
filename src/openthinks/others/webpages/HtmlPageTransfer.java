@@ -29,8 +29,6 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.agent.HtmlCssResourceAgent;
 import openthinks.others.webpages.agent.HtmlImageResourceAgent;
 import openthinks.others.webpages.agent.HtmlJsResourceAgent;
@@ -43,6 +41,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlLink;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlScript;
+import com.openthinks.libs.utilities.CommonUtilities;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * Responsible for download whole html page include css,js,image resources<BR>

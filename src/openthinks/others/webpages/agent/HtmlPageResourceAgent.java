@@ -27,12 +27,12 @@ package openthinks.others.webpages.agent;
 import java.io.IOException;
 import java.net.URL;
 
-import openthinks.libs.utilities.logger.ProcessLogger;
 import openthinks.others.webpages.keeper.HtmlResourceKeeper;
 import openthinks.others.webpages.util.ResourceType;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * The html content agent for HTML page
