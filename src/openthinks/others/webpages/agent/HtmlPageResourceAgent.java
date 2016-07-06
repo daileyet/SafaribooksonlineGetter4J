@@ -52,6 +52,7 @@ public class HtmlPageResourceAgent extends HtmlTextResourceAgent {
 		processOthers(htmlPage);
 		keeper.doAdditionalProcessor(getClass());
 		String html = htmlPage.asXml();
+
 		//fix XML error
 		html = html.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "<!DOCTYPE html>");
 		storeTextResource(html);
