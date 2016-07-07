@@ -27,6 +27,7 @@ package openthinks.others.webpages.safaribook;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.InvalidPropertiesFormatException;
+import java.util.Optional;
 
 import openthinks.others.webpages.WebPagesConfigure;
 
@@ -37,6 +38,7 @@ import openthinks.others.webpages.WebPagesConfigure;
  */
 public class SafariBookConfigure extends WebPagesConfigure {
 	private static final long serialVersionUID = 9199073815096246950L;
+	public static final String BOOKNAME = "safaribook-name";
 
 	public static final SafariBookConfigure create() {
 		return new SafariBookConfigure();
@@ -54,4 +56,13 @@ public class SafariBookConfigure extends WebPagesConfigure {
 		instance.load(is);
 		return instance;
 	}
+
+	public Optional<String> getBookName() {
+		return getProp(BOOKNAME);
+	}
+
+	public void setBookName(String value) {
+		setProperty(BOOKNAME, value);
+	}
+
 }

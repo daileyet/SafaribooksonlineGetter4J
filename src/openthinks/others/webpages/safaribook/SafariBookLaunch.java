@@ -10,6 +10,7 @@ import openthinks.others.webpages.WebPagesLaunch;
 import openthinks.others.webpages.additional.AdditionalBooks;
 import openthinks.others.webpages.additional.AdditionalProcessor;
 import openthinks.others.webpages.agent.HtmlPageResourceAgent;
+import openthinks.others.webpages.exception.LaunchFailedException;
 import openthinks.others.webpages.exception.LostConfigureItemException;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
@@ -28,6 +29,50 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 	public SafariBookLaunch(SafariBookConfigure config) {
 		super();
 		this.config = config;
+		initialAdditionals();
+	}
+
+	private void initialAdditionals() {
+		AdditionalBooks.register(HtmlPageResourceAgent.class, new AdditionalProcessor() {
+
+			@Override
+			public void process(HtmlElement element) {
+				HtmlPage page = (HtmlPage) element.getPage();
+				HtmlElement head = page.getHead();
+				head.getElementsByTagName("script")
+						.stream()
+						.filter((HtmlElement script) -> {
+							return !script.hasAttribute("src")
+									&& "text/javascript".equalsIgnoreCase(script.getAttribute("type"))
+									&& script.getTextContent().contains("CookieState");
+						}).forEach((HtmlElement script) -> {
+							script.setTextContent("");
+							//clear script
+							});
+
+				HtmlMeta metaElement = (HtmlMeta) page.createElement("meta");
+				metaElement.setAttribute("content", "text/html; charset=utf-8");
+				metaElement.setAttribute("http-equiv", "Content-Type");
+				head.appendChild(metaElement);
+
+			}
+		});
+	}
+
+	public void start() throws LaunchFailedException {
+		try {
+			LogManager.getLogManager().readConfiguration(
+					SafariBookLaunch.class.getResourceAsStream("/logging.properties"));
+		} catch (SecurityException | IOException e1) {
+			ProcessLogger.warn(CommonUtilities.getCurrentInvokerMethod(), e1.getMessage());
+		}
+		ProcessLogger.currentLevel = config.getLoggerLevel();
+		try {
+			this.launch();
+		} catch (SecurityException | IOException | LostConfigureItemException e) {
+			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			throw new LaunchFailedException(e);
+		}
 	}
 
 	public static void main(String[] args) throws SecurityException, IOException {
