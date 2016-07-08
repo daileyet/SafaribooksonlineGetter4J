@@ -81,7 +81,7 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 			@Override
 			public String process(String htmlContent) {
 				htmlContent = htmlContent.replaceAll("��", "'");
-				htmlContent = htmlContent.replaceAll("?", "&nbsp;");
+				htmlContent = htmlContent.replaceAll("\\?\\?", "&nbsp;&nbsp;");
 				return htmlContent;
 			}
 		});
