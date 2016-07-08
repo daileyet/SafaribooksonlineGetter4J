@@ -143,7 +143,11 @@ public class HtmlResourceKeeper extends AbstractResourceKeeper {
 	public <T extends HtmlResourceAgent> void doAdditionalProcessor(Class<T> clazz) {
 		ProcessLogger.debug(clazz.getName());
 		getAdditionalProcessor(clazz).ifPresent((aProcessor) -> {
-			aProcessor.process(this.htmlElement);
+			try {
+				aProcessor.process(this.htmlElement);
+			} catch (Exception e) {
+				ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			}
 		});
 	}
 
@@ -151,8 +155,13 @@ public class HtmlResourceKeeper extends AbstractResourceKeeper {
 		ProcessLogger.debug(clazz.getName());
 		final StringBuilder content = new StringBuilder();
 		getAdditionalProcessor(clazz).ifPresent((aProcessor) -> {
-			String newContent = aProcessor.process(htmlContent);
-			content.append(newContent);
+			try {
+				String newContent = aProcessor.process(htmlContent);
+				content.append(newContent);
+			} catch (Exception e) {
+				content.append(htmlContent);
+				ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			}
 		});
 		return content.toString();
 	}
