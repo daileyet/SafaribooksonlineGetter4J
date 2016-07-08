@@ -147,6 +147,16 @@ public class HtmlResourceKeeper extends AbstractResourceKeeper {
 		});
 	}
 
+	public <T extends HtmlResourceAgent> String doAdditionalProcessor(Class<T> clazz, String htmlContent) {
+		ProcessLogger.debug(clazz.getName());
+		final StringBuilder content = new StringBuilder();
+		getAdditionalProcessor(clazz).ifPresent((aProcessor) -> {
+			String newContent = aProcessor.process(htmlContent);
+			content.append(newContent);
+		});
+		return content.toString();
+	}
+
 	public boolean nameEncode() {
 
 		return false;

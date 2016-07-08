@@ -6,4 +6,6 @@ public interface AdditionalProcessor {
 
 	void process(HtmlElement element);
 
+	String process(String htmlContent);
+
 }

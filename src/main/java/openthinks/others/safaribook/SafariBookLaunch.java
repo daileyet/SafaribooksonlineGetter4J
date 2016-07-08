@@ -3,6 +3,7 @@ package openthinks.others.safaribook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.LogManager;
 
 import openthinks.others.webpages.HtmlPageTransfer;
@@ -14,6 +15,7 @@ import openthinks.others.webpages.exception.LaunchFailedException;
 import openthinks.others.webpages.exception.LostConfigureItemException;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlMeta;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.openthinks.libs.utilities.CommonUtilities;
@@ -37,6 +39,26 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 
 			@Override
 			public void process(HtmlElement element) {
+				clearScript(element);
+				clearLoading(element);
+			}
+
+			private void clearLoading(HtmlElement element) {
+				HtmlPage page = (HtmlPage) element.getPage();
+				HtmlElement body = page.getBody();
+
+				@SuppressWarnings("unchecked")
+				List<HtmlImage> images = (List<HtmlImage>) body.getByXPath("//img[contains(@src,'loading.gif')]");
+				for (HtmlImage image : images) {
+					image.remove();
+				}
+
+			}
+
+			/**
+			 * @param element
+			 */
+			protected void clearScript(HtmlElement element) {
 				HtmlPage page = (HtmlPage) element.getPage();
 				HtmlElement head = page.getHead();
 				head.getElementsByTagName("script")
@@ -54,12 +76,19 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 				metaElement.setAttribute("content", "text/html; charset=utf-8");
 				metaElement.setAttribute("http-equiv", "Content-Type");
 				head.appendChild(metaElement);
+			}
 
+			@Override
+			public String process(String htmlContent) {
+				htmlContent = htmlContent.replaceAll("��", "'");
+				htmlContent = htmlContent.replaceAll("?", "&nbsp;");
+				return htmlContent;
 			}
 		});
 	}
 
 	public void start() throws LaunchFailedException {
+		ProcessLogger.debug("SafariBookLanuch start...");
 		try {
 			LogManager.getLogManager().readConfiguration(
 					SafariBookLaunch.class.getResourceAsStream("/logging.properties"));
@@ -134,6 +163,11 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 				metaElement.setAttribute("http-equiv", "Content-Type");
 				head.appendChild(metaElement);
 
+			}
+
+			@Override
+			public String process(String htmlContent) {
+				return htmlContent;
 			}
 		});
 
