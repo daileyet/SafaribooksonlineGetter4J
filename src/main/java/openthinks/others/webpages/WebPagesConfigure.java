@@ -60,7 +60,7 @@ public class WebPagesConfigure extends Properties {
 		super();
 	}
 
-	protected Optional<String> getProp(String propertyName) {
+	public Optional<String> getProp(String propertyName) {
 		try {
 			return Optional.of(this.getProperty(propertyName));
 		} catch (Exception e) {
