@@ -3,9 +3,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
 
-import openthinks.others.safaribook.SafariBookConfigure;
-import openthinks.others.safaribook.SafariBookLaunch;
-import openthinks.others.webpages.exception.LaunchFailedException;
+import com.openthinks.others.safaribook.SafariBookConfigure;
+import com.openthinks.others.safaribook.SafariBookLaunch;
+import com.openthinks.others.webpages.exception.LaunchFailedException;
 
 public class SafariStarter {
 

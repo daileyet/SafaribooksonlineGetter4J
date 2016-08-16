@@ -17,7 +17,7 @@
  * under the License.
  *
 * @Title: PageKeeper.java 
-* @Package openthinks.others.safari 
+* @Package com.openthinks.others.safari 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 6, 2015

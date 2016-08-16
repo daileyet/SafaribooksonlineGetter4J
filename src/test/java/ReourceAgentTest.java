@@ -1,8 +1,8 @@
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import openthinks.others.webpages.agent.HtmlResourceAgent;
-import openthinks.others.webpages.agent.ResourceAgent;
+import com.openthinks.others.webpages.agent.HtmlResourceAgent;
+import com.openthinks.others.webpages.agent.ResourceAgent;
 
 public class ReourceAgentTest {
 
