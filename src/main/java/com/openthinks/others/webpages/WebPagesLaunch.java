@@ -100,6 +100,7 @@ public abstract class WebPagesLaunch {
 		if (loginForm == null) {
 			throw new IllegalArgumentException("Cannot found the login form.");
 		}
+
 		HtmlSubmitInput button = loginForm.getInputByName(config.getLoginSubmitBtnName().get());
 		HtmlTextInput userName = loginForm.getInputByName(config.getLoginAuthInputName().get());
 		userName.setValueAttribute(config.getLoginAuthInputValue().get());
@@ -203,7 +204,7 @@ public abstract class WebPagesLaunch {
 	}
 
 	protected WebClient createWebClient() {
-		if (config.getProxyHost() == null) {
+		if (config.getProxyHost() == null || !config.getProxyHost().isPresent()) {
 			return new WebClient(config.getBrowserVersion());
 		} else {
 			return new WebClient(config.getBrowserVersion(), config.getProxyHost().get(), config.getProxyPort());
