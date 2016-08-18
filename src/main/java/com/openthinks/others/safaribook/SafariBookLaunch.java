@@ -60,16 +60,14 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 			protected void clearScript(HtmlElement element) {
 				HtmlPage page = (HtmlPage) element.getPage();
 				HtmlElement head = page.getHead();
-				head.getElementsByTagName("script")
-						.stream()
-						.filter((HtmlElement script) -> {
-							return !script.hasAttribute("src")
-									&& "text/javascript".equalsIgnoreCase(script.getAttribute("type"))
-									&& script.getTextContent().contains("CookieState");
-						}).forEach((HtmlElement script) -> {
-							script.setTextContent("");
-							//clear script
-							});
+				head.getElementsByTagName("script").stream().filter((HtmlElement script) -> {
+					return !script.hasAttribute("src")
+							&& "text/javascript".equalsIgnoreCase(script.getAttribute("type"))
+							&& script.getTextContent().contains("CookieState");
+				}).forEach((HtmlElement script) -> {
+					script.setTextContent("");
+					//clear script
+				});
 
 				HtmlMeta metaElement = (HtmlMeta) page.createElement("meta");
 				metaElement.setAttribute("content", "text/html; charset=utf-8");
@@ -89,16 +87,16 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 	public void start() throws LaunchFailedException {
 		ProcessLogger.debug("SafariBookLanuch start...");
 		try {
-			LogManager.getLogManager().readConfiguration(
-					SafariBookLaunch.class.getResourceAsStream("/logging.properties"));
+			LogManager.getLogManager()
+					.readConfiguration(SafariBookLaunch.class.getResourceAsStream("/logging.properties"));
 		} catch (SecurityException | IOException e1) {
-			ProcessLogger.warn(CommonUtilities.getCurrentInvokerMethod(), e1.getMessage());
+			ProcessLogger.warn(CommonUtilities.getCurrentInvokerMethod(), e1);
 		}
 		ProcessLogger.currentLevel = config.getLoggerLevel();
 		try {
 			this.launch();
 		} catch (SecurityException | IOException | LostConfigureItemException e) {
-			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e);
 			throw new LaunchFailedException(e);
 		}
 	}
@@ -146,16 +144,14 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 			public void process(HtmlElement element) {
 				HtmlPage page = (HtmlPage) element.getPage();
 				HtmlElement head = page.getHead();
-				head.getElementsByTagName("script")
-						.stream()
-						.filter((HtmlElement script) -> {
-							return !script.hasAttribute("src")
-									&& "text/javascript".equalsIgnoreCase(script.getAttribute("type"))
-									&& script.getTextContent().contains("CookieState");
-						}).forEach((HtmlElement script) -> {
-							script.setTextContent("");
-							//clear script
-							});
+				head.getElementsByTagName("script").stream().filter((HtmlElement script) -> {
+					return !script.hasAttribute("src")
+							&& "text/javascript".equalsIgnoreCase(script.getAttribute("type"))
+							&& script.getTextContent().contains("CookieState");
+				}).forEach((HtmlElement script) -> {
+					script.setTextContent("");
+					//clear script
+				});
 
 				HtmlMeta metaElement = (HtmlMeta) page.createElement("meta");
 				metaElement.setAttribute("content", "text/html; charset=utf-8");
@@ -174,7 +170,7 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 		try {
 			bookLaunch.launch();
 		} catch (SecurityException | IOException | LostConfigureItemException e) {
-			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e);
 		}
 	}
 
