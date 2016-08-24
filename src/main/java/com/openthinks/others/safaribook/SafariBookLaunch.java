@@ -94,6 +94,7 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 		}
 		ProcessLogger.currentLevel = config.getLoggerLevel();
 		try {
+			this.doSafariBookConfigure();
 			this.launch();
 		} catch (SecurityException | IOException | LostConfigureItemException e) {
 			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e);
@@ -101,12 +102,20 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 		}
 	}
 
+	/**
+	 * 
+	 */
+	protected void doSafariBookConfigure() {
+		SafariBookConfigure sbConfig = (SafariBookConfigure) this.config;
+		if (sbConfig.getBookName().isPresent()) {
+			String bookFolder = sbConfig.getBookName().get();
+			File finalKeepDir = new File(sbConfig.getKeepDir().get(), bookFolder);
+			sbConfig.setKeepDir(finalKeepDir.getAbsolutePath());
+		}
+	}
+
 	public static void main(String[] args) throws SecurityException, IOException {
-		LogManager.getLogManager().readConfiguration(SafariBookLaunch.class.getResourceAsStream("/logging.properties"));
-
 		SafariBookConfigure config = initialConfig(args);
-
-		ProcessLogger.currentLevel = config.getLoggerLevel();
 		//remove script 
 		/*
 		 <script language="javascript" type="text/javascript">
@@ -138,38 +147,10 @@ public final class SafariBookLaunch extends WebPagesLaunch {
 		//]]>
 		    </script>
 		*/
-		AdditionalBooks.register(HtmlPageResourceAgent.class, new AdditionalProcessor() {
-
-			@Override
-			public void process(HtmlElement element) {
-				HtmlPage page = (HtmlPage) element.getPage();
-				HtmlElement head = page.getHead();
-				head.getElementsByTagName("script").stream().filter((HtmlElement script) -> {
-					return !script.hasAttribute("src")
-							&& "text/javascript".equalsIgnoreCase(script.getAttribute("type"))
-							&& script.getTextContent().contains("CookieState");
-				}).forEach((HtmlElement script) -> {
-					script.setTextContent("");
-					//clear script
-				});
-
-				HtmlMeta metaElement = (HtmlMeta) page.createElement("meta");
-				metaElement.setAttribute("content", "text/html; charset=utf-8");
-				metaElement.setAttribute("http-equiv", "Content-Type");
-				head.appendChild(metaElement);
-
-			}
-
-			@Override
-			public String process(String htmlContent) {
-				return htmlContent;
-			}
-		});
-
 		SafariBookLaunch bookLaunch = new SafariBookLaunch(config);
 		try {
-			bookLaunch.launch();
-		} catch (SecurityException | IOException | LostConfigureItemException e) {
+			bookLaunch.start();
+		} catch (LaunchFailedException e) {
 			ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e);
 		}
 	}
