@@ -49,8 +49,8 @@ public abstract class WebPagesLaunch {
 			throw new LostConfigureItemException("No configuration.");
 		if (!config.getKeepDir().isPresent())
 			throw new LostConfigureItemException("Lost configuration for save dir.");
-
-		try (final WebClient webClient = createWebClient()) {
+		final WebClient webClient = createWebClient();
+		try {
 			webClient.getOptions().setThrowExceptionOnScriptError(false);
 			webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 			webClient.getOptions().setTimeout(35000);
@@ -60,6 +60,9 @@ public abstract class WebPagesLaunch {
 			ProcessLogger.info("All pages has been download.");
 		} catch (Exception e) {
 			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+		} finally {
+			if (webClient != null)
+				webClient.close();
 		}
 	}
 
@@ -152,6 +155,10 @@ public abstract class WebPagesLaunch {
 					pageTransfer.transfer();
 				} catch (Exception e) {
 					ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+				} finally {
+					if (currentPage != null)
+						currentPage.cleanUp();
+					currentPage = null;
 				}
 			});
 		} catch (FailingHttpStatusCodeException | IOException | LostConfigureItemException e) {
@@ -176,7 +183,6 @@ public abstract class WebPagesLaunch {
 				currentPage = webClient.getPage(nextURL);
 				HtmlPageTransfer htmlPageTransfer = getHtmlPageTransfer(currentPage, config.getKeepDir().get());
 				htmlPageTransfer.transfer();
-
 				ProcessLogger.info("Go to download next page:" + nextURL);
 			} catch (FailingHttpStatusCodeException | IOException e) {
 				ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
@@ -186,8 +192,9 @@ public abstract class WebPagesLaunch {
 		}
 
 		do {
+			HtmlPage currentPage = null;
 			try {
-				HtmlPage currentPage = webClient.getPage(nextURL);
+				currentPage = webClient.getPage(nextURL);
 				DomNode anchors = currentPage.getBody().querySelector(config.getNextChainPageAnchorSelector().get());
 				nextAnchor = (HtmlAnchor) anchors;
 				if (nextAnchor != null) {// issue for no found next anchor
@@ -199,6 +206,9 @@ public abstract class WebPagesLaunch {
 			} catch (Exception e) {
 				ProcessLogger.fatal(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 				nextAnchor = null;
+			} finally {
+				if (currentPage != null)
+					currentPage.cleanUp();
 			}
 		} while (nextAnchor != null);
 	}
