@@ -96,6 +96,6 @@ When you set download book save directory as W:\Book on windows OS or /Book on L
 ```
 ### Reference project
 This project has been used as a task type in [WebScheduler](https://github.com/daileyet/webscheduler) system.
-![Used in WebScheduler](https://ggkwjw.bn1303.livefilestore.com/y3miOVDLzcZySfoSGCZ2nAnLOOzGA__wEx1PTfpg5nnTnxVUzkOdmZT5rZXJAVcviYu8kMIKEjUB04doOlH7JW-GVj4zBpMuF3_6WIy2T-djW1GNY9mYKE6VtI7Yl7U7DllqHj0ZLeWVVdS8Ahl6Zjg-LIYwRZKkpf8FCn9HF_sJBc?width=1024&height=651&cropmode=none "Used in WebScheduler")
+![Used in WebScheduler](https://ggkwjw.bn1303.livefilestore.com/y3miOVDLzcZySfoSGCZ2nAnLOOzGA__wEx1PTfpg5nnTnxVUzkOdmZT5rZXJAVcviYu8kMIKEjUB04doOlH7JW-GVj4zBpMuF3_6WIy2T-djW1GNY9mYKE6VtI7Yl7U7DllqHj0ZLeWVVdS8Ahl6Zjg-LIYwRZKkpf8FCn9HF_sJBc?width=1319&height=838&cropmode=none "Used in WebScheduler")
 
 [1]:http://techbus.safaribooksonline.com/
