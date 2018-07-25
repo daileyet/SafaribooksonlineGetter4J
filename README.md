@@ -1,6 +1,8 @@
 # SafaribooksonlineGetter4J
 The auto download for [Safari online book][1]
 
+**NOT maintain this project. Move to [webpage-keeper](https://github.com/daileyet/webpage-keeper)**
+
 ### How to use it?
 Execute the following command line:
 ```
