@@ -33,19 +33,24 @@ import com.openthinks.others.webpages.WebPagesConfigure;
 
 /**
  * Safari book online getter configure
+ * 
  * @author dailey.yet@outlook.com
  *
  */
 public class SafariBookConfigure extends WebPagesConfigure {
 	private static final long serialVersionUID = 9199073815096246950L;
+	public static final String ATTR_VALUE_SPLIT_TOKEN = ";";
 	public static final String BOOKNAME = "safaribook-name";
+	// group task which need go to download book
+	public static final String DOWNLOADGROUPTASKDIR = "group-task-dir";
+	private transient DownloadBookTaskInfo bookTaskInfo=null;
 
 	public static final SafariBookConfigure create() {
 		return new SafariBookConfigure();
 	}
 
-	public static final SafariBookConfigure readXML(InputStream is) throws InvalidPropertiesFormatException,
-			IOException {
+	public static final SafariBookConfigure readXML(InputStream is)
+			throws InvalidPropertiesFormatException, IOException {
 		SafariBookConfigure instance = SafariBookConfigure.create();
 		instance.loadFromXML(is);
 		return instance;
@@ -63,6 +68,22 @@ public class SafariBookConfigure extends WebPagesConfigure {
 
 	public void setBookName(String value) {
 		setProperty(BOOKNAME, value);
+	}
+
+	public Optional<String> getGroupTaskDir() {
+		return getProp(DOWNLOADGROUPTASKDIR);
+	}
+
+	public void setGroupTaskDir(String value) {
+		setProperty(DOWNLOADGROUPTASKDIR, value);
+	}
+	
+	void setBookTaskInfo(final DownloadBookTaskInfo bookTaskInfo) {
+		this.bookTaskInfo = bookTaskInfo;
+	}
+	
+	public Optional<DownloadBookTaskInfo> getBookTaskInfo() {
+		return Optional.ofNullable(bookTaskInfo);
 	}
 
 }

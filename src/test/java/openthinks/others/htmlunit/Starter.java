@@ -26,8 +26,9 @@ public class Starter {
 	static String authPass = "";
 
 	public static void main(String[] args) throws Exception {
-		//		startBookURL = "http://techbus.safaribooksonline.com/book/programming/java/9781617291999/chapter-5dot-working-with-streams/ch05lev1sec2_html";
-		try (final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_38, "cn-proxy.jp.oracle.com", 80)) {
+		// startBookURL =
+		// "http://techbus.safaribooksonline.com/book/programming/java/9781617291999/chapter-5dot-working-with-streams/ch05lev1sec2_html";
+		try (final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52)) {
 			webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 			webClient.getOptions().setJavaScriptEnabled(true);
 			webClient.getOptions().setThrowExceptionOnScriptError(false);
@@ -49,8 +50,8 @@ public class Starter {
 	 * @throws MalformedURLException
 	 * @throws ElementNotFoundException
 	 */
-	protected static void loginAndAuth(final WebClient webClient) throws IOException, FailingHttpStatusCodeException,
-			MalformedURLException, ElementNotFoundException {
+	protected static void loginAndAuth(final WebClient webClient)
+			throws IOException, FailingHttpStatusCodeException, MalformedURLException, ElementNotFoundException {
 		final HtmlPage loginPage = webClient.getPage(loginURL);
 
 		List<HtmlForm> forms = loginPage.getForms();
@@ -77,8 +78,8 @@ public class Starter {
 	 * @throws MalformedURLException
 	 * @throws ElementNotFoundException
 	 */
-	protected static void travelWholeBook(final WebClient webClient) throws IOException,
-			FailingHttpStatusCodeException, MalformedURLException, ElementNotFoundException {
+	protected static void travelWholeBook(final WebClient webClient)
+			throws IOException, FailingHttpStatusCodeException, MalformedURLException, ElementNotFoundException {
 		System.out.println("Change to download book first page...");
 
 		HtmlPage currentPage;

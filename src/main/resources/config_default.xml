@@ -7,8 +7,12 @@
 <entry key="proxy-host"></entry>
 <!--[option]proxy host port-->
 <entry key="proxy-port">80</entry>
+<!--[option]proxy auth user name-->
+<entry key="proxy-auth-user"></entry>
+<!--[option]proxy auth pass-->
+<entry key="proxy-auth-pass"></entry>
 <!--[required]download save directory-->
-<entry key="save-dir">W:\Book\android-studio-essentials</entry>
+<entry key="save-dir">W:\Book\</entry>
 <!--[required]identity the authorized for the download pages-->
 <entry key="need-login">true</entry>
 
@@ -29,6 +33,8 @@
 <entry key="login-form-password-input-value"></entry>
 <!--[required]the login page form submit button name-->
 <entry key="login-form-submit-name"></entry>
+<!--[required]download book name and save to local fold name-->
+<entry key="safaribook-name">Head First C</entry>
 
 <!--option when the first page url configured-->
 <!--The catalog page url-->

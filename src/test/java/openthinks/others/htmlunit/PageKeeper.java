@@ -124,7 +124,7 @@ public class PageKeeper {
 					File keepFile = new File(styleDir, styleName);
 					checkIfAlreadExist(keepFile);
 					WebResponse wrp = getResourceResponse(styleUrl);
-					styleCtx = wrp.getContentAsString("UTF-8");
+					styleCtx = wrp.getContentAsString();
 					styleCtx = keepStyleReference(styleCtx).toString();
 					store(styleCtx, keepFile);
 					element.setAttribute("href", RESOURCE_STYLE_DIR + "/" + styleName);
@@ -162,7 +162,7 @@ public class PageKeeper {
 					imageReader.setInput(iis);
 					ImageIO.write(imageReader.read(0), imageReader.getFormatName(), keepFile);
 				} else {
-					styleRefCtx = wrp.getContentAsString("UTF-8");
+					styleRefCtx = wrp.getContentAsString();
 					store(styleRefCtx, keepFile);
 				}
 				matcher.appendReplacement(sb, "url(" + RESOURCE_STYLE_REFERENCE_URL + "/" + styleRefName + ")");
@@ -174,7 +174,7 @@ public class PageKeeper {
 				matcher.appendReplacement(sb, "url(" + RESOURCE_STYLE_REFERENCE_URL + "/" + styleRefName + ")");
 			} catch (NoSuchElementException e) {
 				if (wrp != null) {
-					styleRefCtx = wrp.getContentAsString("UTF-8");
+					styleRefCtx = wrp.getContentAsString();
 					store(styleRefCtx, keepFile);
 					matcher.appendReplacement(sb, "url(" + RESOURCE_STYLE_REFERENCE_URL + "/" + styleRefName + ")");
 				}
@@ -202,7 +202,7 @@ public class PageKeeper {
 					File keepFile = new File(tagDir, tagName);
 					checkIfAlreadExist(keepFile);
 					WebResponse wrp = getResourceResponse(tagUrl);
-					tagCtx = wrp.getContentAsString("UTF-8");
+					tagCtx = wrp.getContentAsString();
 					store(tagCtx, new File(tagDir, tagName));
 					element.setAttribute("src", RESOURCE_SCRIPT_DIR + "/" + tagName);
 				} catch (IOException e) {
@@ -305,7 +305,7 @@ public class PageKeeper {
 	}
 
 	static void print(HtmlPage htmlPage) {
-		String htmlContent = htmlPage.getWebResponse().getContentAsString("UTF-8");
+		String htmlContent = htmlPage.getWebResponse().getContentAsString();
 		System.out.println(htmlContent);
 	}
 
