@@ -109,64 +109,6 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>net.sourceforge.htmlunit</groupId>
-      <artifactId>htmlunit</artifactId>
-      <version>2.28</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>xalan</artifactId>
-          <groupId>xalan</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-lang3</artifactId>
-          <groupId>org.apache.commons</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-text</artifactId>
-          <groupId>org.apache.commons</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>httpmime</artifactId>
-          <groupId>org.apache.httpcomponents</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>htmlunit-core-js</artifactId>
-          <groupId>net.sourceforge.htmlunit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>neko-htmlunit</artifactId>
-          <groupId>net.sourceforge.htmlunit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>cssparser</artifactId>
-          <groupId>net.sourceforge.cssparser</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-io</artifactId>
-          <groupId>commons-io</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-logging</artifactId>
-          <groupId>commons-logging</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-net</artifactId>
-          <groupId>commons-net</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>websocket-client</artifactId>
-          <groupId>org.eclipse.jetty.websocket</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.openthinks.libs</groupId>
-      <artifactId>openlibs.utilities</artifactId>
-      <version>1.2.1</version>
-      <scope>provided</scope>
-    </dependency>
   </dependencies>
   <distributionManagement>
     <repository>
