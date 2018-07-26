@@ -4,8 +4,8 @@
 	<groupId>com.openthinks.others</groupId>
 	<artifactId>safaribook-getter</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
-	<name>webpage-keeper</name>
+	<version>1.1</version>
+	<name>safaribook-getter</name>
 	<description>The auto download for Safari online book</description>
 	<url>https://github.com/open-thinks/SafaribooksonlineGetter4J.git</url>
 	
