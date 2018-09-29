@@ -92,6 +92,30 @@ public class DownloadBookTaskInfo extends Properties {
 		this.storeFile = storeFile;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return  getBookName().orElse("");
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DownloadBookTaskInfo other = (DownloadBookTaskInfo) obj;
+		if (!getCatalogPageUrl().isPresent()) {
+			if (other.getCatalogPageUrl().isPresent())
+				return false;
+		} else if (!getCatalogPageUrl().get().equals(other.getCatalogPageUrl().orElse("")))
+			return false;
+		return true;
+	}
+
 	public final boolean  keep() {
 		if(this.storeFile!=null) {
 			Date updateTime = new Date();

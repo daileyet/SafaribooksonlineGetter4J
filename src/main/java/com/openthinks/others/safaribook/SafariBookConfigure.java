@@ -78,7 +78,7 @@ public class SafariBookConfigure extends WebPagesConfigure {
 		setProperty(DOWNLOADGROUPTASKDIR, value);
 	}
 	
-	void setBookTaskInfo(final DownloadBookTaskInfo bookTaskInfo) {
+	public void setBookTaskInfo(final DownloadBookTaskInfo bookTaskInfo) {
 		this.bookTaskInfo = bookTaskInfo;
 	}
 	

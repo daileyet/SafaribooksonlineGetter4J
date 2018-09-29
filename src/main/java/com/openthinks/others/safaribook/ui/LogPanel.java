@@ -1,21 +1,21 @@
 package com.openthinks.others.safaribook.ui;
 
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import javax.swing.JTextArea;
-import java.awt.GridBagConstraints;
-import javax.swing.JLabel;
-import java.awt.Insets;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
-public class LogPanel extends JPanel {
-
+ class LogPanel extends LanucherPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5100967008524290644L;
+	JTextArea textAreaLog;
 
 	/**
 	 * Create the panel.
@@ -44,7 +44,7 @@ public class LogPanel extends JPanel {
 		gbc_scrollPaneLog.gridy = 1;
 		add(scrollPaneLog, gbc_scrollPaneLog);
 		
-		JTextArea textAreaLog = new JTextArea();
+		textAreaLog = new JTextArea();
 		textAreaLog.setEditable(false);
 		scrollPaneLog.setViewportView(textAreaLog);
 

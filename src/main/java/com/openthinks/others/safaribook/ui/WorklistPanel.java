@@ -4,33 +4,34 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-public class WorklistPanel extends JPanel {
+import com.openthinks.others.safaribook.DownloadBookTaskInfo;
 
+class WorklistPanel extends LanucherPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5106895977773266220L;
+	 JList<DownloadBookTaskInfo> listWorklist;
 
 	/**
 	 * Create the panel.
 	 */
 	public WorklistPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		
+
 		JLabel lblWorklistTitle = new JLabel("Worklist");
 		lblWorklistTitle.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblWorklistTitle = new GridBagConstraints();
@@ -39,28 +40,21 @@ public class WorklistPanel extends JPanel {
 		gbc_lblWorklistTitle.gridx = 0;
 		gbc_lblWorklistTitle.gridy = 0;
 		add(lblWorklistTitle, gbc_lblWorklistTitle);
-		
+
 		JScrollPane scrollPaneWorklist = new JScrollPane();
 		GridBagConstraints gbc_scrollPaneWorklist = new GridBagConstraints();
 		gbc_scrollPaneWorklist.fill = GridBagConstraints.BOTH;
 		gbc_scrollPaneWorklist.gridx = 0;
 		gbc_scrollPaneWorklist.gridy = 1;
 		add(scrollPaneWorklist, gbc_scrollPaneWorklist);
-		
-		JList listWorklist = new JList();
+
+		listWorklist = new JList<>();
+		listWorklist.setModel(new DefaultListModel<DownloadBookTaskInfo>());
 		scrollPaneWorklist.setViewportView(listWorklist);
-		listWorklist.setModel(new AbstractListModel() {
-			String[] values = new String[] {"book 1", "book 2", "book 3", "book 4", "book 5", "book 6", "book 7", "book 8", "book 9", "book 10", "book 11", "book 12", "book 13", "book 14", "book 15", "book 16", "book 17", "book 18", "book 19"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
 		listWorklist.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		listWorklist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 	}
 
+	
 }
