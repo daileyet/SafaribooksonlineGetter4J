@@ -10,16 +10,15 @@ import javax.swing.JPanel;
  *
  */
 public abstract class LanucherPanel extends JPanel {
+  private static final long serialVersionUID = -7944412115559867869L;
+  protected SafariBookUILauncher launcher;
 
-	private static final long serialVersionUID = 5997091368875300361L;
-	protected SafariBookUILauncher launcher;
+  final SafariBookUILauncher launcher() {
+    return launcher;
+  }
 
-	final SafariBookUILauncher launcher() {
-		return launcher;
-	}
-
-	void setLauncher(final SafariBookUILauncher launcher) {
-		this.launcher = launcher;
-		this.launcher.register(this);
-	}
+  void setLauncher(final SafariBookUILauncher launcher) {
+    this.launcher = launcher;
+    this.launcher.register(this);
+  }
 }

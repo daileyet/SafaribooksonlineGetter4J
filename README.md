@@ -46,7 +46,7 @@ java -jar SafariBookGetter.jar -config W:\Book\default_config.xml
 <!--[required]the login page form submit button name-->
 <entry key="login-form-submit-name"></entry>
 <!--[required]download book name and save to local fold name-->
-<entry key="safaribook-name">Head First C</entry>
+<entry key="pages-name">Head First C</entry>
 
 <!--option when the first page url configured-->
 <!--The catalog page url-->
@@ -128,7 +128,7 @@ xml definition (.xml)
 <!--The catalog page url-->
 <entry key="pages-catalog-url">http://techbus.safaribooksonline.com/book/programming/9781787127562</entry>
 <!--[required]download book name and save to local fold name-->
-<entry key="safaribook-name">Mastering_Spring_Boot_2</entry>
+<entry key="pages-name">Mastering_Spring_Boot_2</entry>
 <!--[optional]flag to indicate this book has been download or not; true/false-->
 <entry key="is-processed">false</entry>
 </properties>
@@ -137,7 +137,7 @@ properties definition (.properties)
 ```properties
 catalog-pagelinks-selector=div.catalog_container a[href*='9781788624398']
 pages-catalog-url=http://techbus.safaribooksonline.com/book/web-development/9781788624398
-safaribook-name=Spring5_By_Example
+pages-name=Spring5_By_Example
 ```
 
 ### Book structure on disk

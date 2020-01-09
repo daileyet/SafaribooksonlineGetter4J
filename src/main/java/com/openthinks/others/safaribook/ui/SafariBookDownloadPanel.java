@@ -3,69 +3,69 @@ package com.openthinks.others.safaribook.ui;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 
 class SafariBookDownloadPanel extends LanucherPanel {
-	private static final long serialVersionUID = -7538087659350471378L;
-	private List<LanucherPanel> children = new ArrayList<>();
-	/**
-	 * Create the panel.
-	 */
-	public SafariBookDownloadPanel() {
-		setLayout(new BorderLayout(0, 0));
+  private static final long serialVersionUID = 1846993153090331508L;
+  private List<LanucherPanel> children = new ArrayList<>();
 
-		JMenuBar menuBar = new JMenuBar();
-		add(menuBar, BorderLayout.NORTH);
+  /**
+   * Create the panel.
+   */
+  public SafariBookDownloadPanel() {
+    setLayout(new BorderLayout(0, 0));
 
-		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
+    JMenuBar menuBar = new JMenuBar();
+    add(menuBar, BorderLayout.NORTH);
 
-		JMenuItem mntmLoad = new JMenuItem("Load");
-		mntmLoad.setToolTipText("Load Configuration");
-		mnFile.add(mntmLoad);
+    JMenu mnFile = new JMenu("File");
+    menuBar.add(mnFile);
 
-		JMenuItem mntmCreate = new JMenuItem("Create");
-		mntmCreate.setToolTipText("Create Configuration");
-		mnFile.add(mntmCreate);
+    JMenuItem mntmLoad = new JMenuItem("Load");
+    mntmLoad.setToolTipText("Load Configuration");
+    mnFile.add(mntmLoad);
 
-		JMenuItem mntmExit = new JMenuItem("Exit");
-		mnFile.add(mntmExit);
+    JMenuItem mntmCreate = new JMenuItem("Create");
+    mntmCreate.setToolTipText("Create Configuration");
+    mnFile.add(mntmCreate);
 
-		JMenu mnHelp = new JMenu("Help");
-		menuBar.add(mnHelp);
+    JMenuItem mntmExit = new JMenuItem("Exit");
+    mnFile.add(mntmExit);
 
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mnHelp.add(mntmAbout);
+    JMenu mnHelp = new JMenu("Help");
+    menuBar.add(mnHelp);
 
-		JSplitPane splitPaneMain = new JSplitPane();
-		splitPaneMain.setEnabled(false);
-		splitPaneMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		add(splitPaneMain);
+    JMenuItem mntmAbout = new JMenuItem("About");
+    mnHelp.add(mntmAbout);
 
-		OperatePanel operatePanel = new OperatePanel();
-		splitPaneMain.setLeftComponent(operatePanel);
-		children.add(operatePanel);
-		JSplitPane splitPaneTip = new JSplitPane();
-		splitPaneTip.setResizeWeight(0.1);
-		splitPaneMain.setRightComponent(splitPaneTip);
+    JSplitPane splitPaneMain = new JSplitPane();
+    splitPaneMain.setEnabled(false);
+    splitPaneMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
+    add(splitPaneMain);
 
-		WorklistPanel worklistPanel = new WorklistPanel();
-		splitPaneTip.setLeftComponent(worklistPanel);
-		children.add(worklistPanel);
-		
-		LogPanel logPanel = new LogPanel();
-		splitPaneTip.setRightComponent(logPanel);
-		children.add(logPanel);
-	}
-	
-	@Override
-	void setLauncher(SafariBookUILauncher launcher) {
-		super.setLauncher(launcher);
-		children.forEach(panel->panel.setLauncher(launcher));
-	}
+    OperatePanel operatePanel = new OperatePanel();
+    splitPaneMain.setLeftComponent(operatePanel);
+    children.add(operatePanel);
+    JSplitPane splitPaneTip = new JSplitPane();
+    splitPaneTip.setResizeWeight(0.1);
+    splitPaneMain.setRightComponent(splitPaneTip);
+
+    WorklistPanel worklistPanel = new WorklistPanel();
+    splitPaneTip.setLeftComponent(worklistPanel);
+    children.add(worklistPanel);
+
+    LogPanel logPanel = new LogPanel();
+    splitPaneTip.setRightComponent(logPanel);
+    children.add(logPanel);
+  }
+
+  @Override
+  void setLauncher(SafariBookUILauncher launcher) {
+    super.setLauncher(launcher);
+    children.forEach(panel -> panel.setLauncher(launcher));
+  }
 
 }

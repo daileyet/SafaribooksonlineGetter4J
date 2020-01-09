@@ -4,7 +4,7 @@
   <groupId>com.openthinks.others</groupId>
   <artifactId>safaribook-getter</artifactId>
   <name>safaribook-getter</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <description>The auto download for Safari online book</description>
   <url>https://github.com/open-thinks/SafaribooksonlineGetter4J.git</url>
   <developers>
@@ -93,7 +93,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.openthinks.others.safaribook.SafariBookLaunch</mainClass>
+                  <mainClass>com.openthinks.others.webpages.Bootstarp</mainClass>
                 </transformer>
               </transformers>
             </configuration>

@@ -1,6 +1,5 @@
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import com.openthinks.others.webpages.agent.HtmlResourceAgent;
 import com.openthinks.others.webpages.agent.ResourceAgent;
 

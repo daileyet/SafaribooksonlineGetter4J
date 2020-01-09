@@ -4,7 +4,7 @@
 	<groupId>com.openthinks.others</groupId>
 	<artifactId>safaribook-getter</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1</version>
+	<version>1.2</version>
 	<name>safaribook-getter</name>
 	<description>The auto download for Safari online book</description>
 	<url>https://github.com/open-thinks/SafaribooksonlineGetter4J.git</url>
@@ -64,7 +64,7 @@
 		<dependency>
 			<groupId>com.openthinks.others</groupId>
 			<artifactId>webpage-keeper</artifactId>
-			<version>1.1</version>
+			<version>1.2</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -142,7 +142,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.openthinks.others.safaribook.SafariBookLaunch</mainClass>
+									<mainClass>com.openthinks.others.webpages.Bootstarp</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
